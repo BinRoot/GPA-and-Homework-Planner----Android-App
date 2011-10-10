@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+	xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="horizontal">
+    <RelativeLayout 
+    	android:id="@+id/relative_transcript_classTitle"
+    	android:layout_width="fill_parent"
+    	android:layout_height="80dip"
+    	android:layout_weight="1">
+    	<Button 
+	    	android:id="@+id/text_transcript_classTitle"
+	    	android:layout_width="fill_parent"
+	    	android:layout_height="fill_parent"
+	    	android:layout_marginRight="50dip"
+	    	android:gravity="center_vertical"
+	    	android:textAppearance="@android:style/TextAppearance.Large"
+	    	android:text="Class"
+	    	android:paddingLeft="20dip"
+	    	android:onClick="classTitledClicked"/>
+	    <Button 
+	    	android:id="@+id/button_edit_classTitle"
+	    	android:visibility="visible"
+	    	android:layout_width="wrap_content"
+	    	android:layout_height="wrap_content"
+	    	android:background="@android:drawable/ic_menu_edit"
+	    	android:layout_alignParentRight="true"
+	    	android:layout_centerVertical="true"
+	    	android:onClick="editButtonClicked"/>
+	    <EditText 
+	    	android:id="@+id/edit_editclass_title"
+	    	android:layout_centerVertical="true"
+	    	android:layout_width="fill_parent"
+	    	android:layout_marginRight="50dip"
+	    	android:layout_height="wrap_content"
+	    	android:inputType="textNoSuggestions"
+	    	android:visibility="gone"/>
+    </RelativeLayout>
+    
+	<LinearLayout 
+		android:id="@+id/relative_grades"
+		android:layout_width="fill_parent"
+    	android:layout_height="fill_parent"
+    	android:clickable="true"
+    	android:onClick="gradesClicked"
+		android:layout_weight="3">
+		
+		<TextView 
+	    	android:id="@+id/text_transcript_gradeMain"
+	    	android:layout_width="fill_parent"
+	    	android:layout_height="fill_parent"
+	    	android:text="A"
+	    	android:gravity="center"
+	    	android:layout_weight="1"/>
+    	<TextView 
+	    	android:id="@+id/text_transcript_credits"
+	    	android:layout_width="fill_parent"
+	    	android:layout_height="fill_parent"
+	    	android:text="3"
+	    	android:gravity="center"
+	    	android:layout_weight="1"/>
+		
+	</LinearLayout>
+    
+    
+	
+</LinearLayout>

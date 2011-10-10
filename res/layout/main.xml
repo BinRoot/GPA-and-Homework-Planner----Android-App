@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout 
+	xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+	<RelativeLayout 
+		android:id="@+id/relative_main_top"
+		style="@style/TopBar_relative">
+		<Button 
+			android:id="@+id/button_main_logo"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:layout_centerInParent="true"
+			android:textAppearance="@android:style/TextAppearance.Large"
+			android:text="LOGO"/>
+	</RelativeLayout>
+	
+	<ScrollView 
+		android:id="@+id/scroll_main_mid"
+		android:layout_below="@id/relative_main_top"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:paddingBottom="60dip">
+		<LinearLayout 
+			android:layout_width="fill_parent"
+			android:layout_height="250dip"
+			android:orientation="horizontal">
+			<Button 
+				android:id="@+id/button_main_homework"
+				android:layout_width="fill_parent"
+				android:layout_height="200dip"
+				android:text="Homework"
+				android:layout_weight="1"/>
+			<Button 
+				android:id="@+id/button_main_transcript"
+				android:layout_width="fill_parent"
+				android:layout_height="200dip"
+				android:text="Transcript"
+				android:layout_weight="1"/>
+		</LinearLayout>
+		
+	</ScrollView>
+</RelativeLayout>

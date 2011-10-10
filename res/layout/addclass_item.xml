@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="horizontal"
+	android:padding="20dip">
+
+	<Button
+		android:id="@+id/button_addclass"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:visibility="visible"
+		android:text="+ Add Class"
+		android:layout_weight="1"
+		android:onClick="addButtonClicked" />
+	<LinearLayout
+		android:id="@+id/linear_addclass_edit"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:visibility="gone"
+		android:orientation="horizontal">
+		<EditText
+			android:id="@+id/edit_addclass_title"
+			android:layout_width="250dip"
+			android:layout_height="wrap_content"
+			android:inputType="textNoSuggestions"/>
+		<Button
+			android:id="@+id/button_addclass_title"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:background="@android:drawable/ic_menu_add"
+
+			android:onClick="addButtonApplied" />
+	</LinearLayout>
+
+
+
+</LinearLayout>

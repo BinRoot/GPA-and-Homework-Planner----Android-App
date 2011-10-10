@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout 
+	xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    
+    <RelativeLayout 
+		android:id="@+id/relative_transcript_top"
+		style="@style/TopBar_relative">
+		<Button 
+			android:id="@+id/button_main_logo"
+			android:layout_width="80dip"
+			android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true"
+			android:layout_centerVertical="true"
+			android:textAppearance="@android:style/TextAppearance.Large"
+			android:text="&lt;&lt;"
+			android:onClick="backButtonClicked"/>
+			
+		<Button 
+			android:id="@+id/button_main_up"
+			android:layout_width="80dip"
+			android:layout_height="wrap_content"
+			android:layout_centerVertical="true"
+			android:layout_toRightOf="@+id/button_main_logo"
+			android:textAppearance="@android:style/TextAppearance.Large"
+			android:text=" ^ "
+			
+			android:onClick="upButtonClicked"/>
+			
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentRight="true"
+			android:layout_centerVertical="true"
+			android:layout_marginRight="10dip"
+			android:text="Transcript"/>
+	</RelativeLayout>
+
+	<ListView 
+		android:id="@+id/list_transcript"
+		android:layout_below="@id/relative_transcript_top"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
+	</ListView>
+	
+
+</RelativeLayout>
