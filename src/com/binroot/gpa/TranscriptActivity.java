@@ -21,11 +21,14 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnLongClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -61,6 +64,14 @@ public class TranscriptActivity extends Activity {
 		}
 
 		lv = (ListView) findViewById(R.id.list_transcript);
+		
+//		lv.setOnLongClickListener(new OnLongClickListener() {
+//			
+//			public boolean onLongClick(View v) {
+//				Toast.makeText(TranscriptActivity.this, "long clicked", Toast.LENGTH_LONG).show();
+//				return true;
+//			}
+//		});
 		
 		storageInit(); // must call after lv is initialized
 		
@@ -254,7 +265,7 @@ public class TranscriptActivity extends Activity {
 		}
 
 		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
+		public View getView(final int position, View convertView, ViewGroup parent) {
 			
 			View v = convertView;
 			
@@ -270,7 +281,11 @@ public class TranscriptActivity extends Activity {
 				if(addMode==true) {
 					((LinearLayout)v.findViewById(R.id.linear_addclass_edit)).setVisibility(View.VISIBLE);
 					//((EditText)v.findViewById(R.id.edit_addclass_title)).requestFocus();
+					EditText et = ((EditText)v.findViewById(R.id.edit_addclass_title));
+					
+					
 					((Button)v.findViewById(R.id.button_addclass)).setVisibility(View.GONE);
+					
 				}
 				else if(addMode==false) {
 					((LinearLayout)v.findViewById(R.id.linear_addclass_edit)).setVisibility(View.GONE);
@@ -308,6 +323,41 @@ public class TranscriptActivity extends Activity {
 				((TextView)v.findViewById(R.id.text_transcript_classTitle)).setText(classList.get(position).getTitle());
 				((TextView)v.findViewById(R.id.text_transcript_gradeMain)).setText(numToGrade(classList.get(position).getGradeMain()));
 				((TextView)v.findViewById(R.id.text_transcript_credits)).setText(classList.get(position).getCredits()+"");
+				
+				((TextView)v.findViewById(R.id.text_transcript_classTitle)).setOnLongClickListener(new OnLongClickListener() {
+					
+					@Override
+					public boolean onLongClick(View v) {
+						Toast.makeText(TranscriptActivity.this, "long clicked", Toast.LENGTH_LONG).show();
+						
+						AlertDialog.Builder builder = new AlertDialog.Builder(TranscriptActivity.this);
+						builder.setMessage("Do you want to remove \""+ta.classList.get(position).getTitle()+"\" from this term?")
+						       .setCancelable(false)
+						       .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+						           public void onClick(DialogInterface dialog, int id) {
+						        	   
+						        	   // TODO reflect deletion on file
+						        	   TranscriptParser.getInstance().deleteClass(period, ta.classList.get(position).getTitle());
+						        	   jMain = TranscriptParser.getInstance().getJSON();
+						        	   updateFile();
+						        	   
+						        	   classList.remove(position);
+						        	   
+						        	   notifyDataSetChanged();
+						        	   dialog.cancel();
+						           }
+						       })
+						       .setNegativeButton("No", new DialogInterface.OnClickListener() {
+						           public void onClick(DialogInterface dialog, int id) {
+						                dialog.cancel();
+						           }
+						       });
+						AlertDialog alert = builder.create();
+						alert.show();
+						
+						return true;
+					}
+				});
 				
 			}
 			return v;
@@ -348,8 +398,8 @@ public class TranscriptActivity extends Activity {
 	
 	public void addButtonClicked(View v) {
 		ta.addMode = true;
-		
 		ta.notifyDataSetChanged();
+		
 		
 		Log.d(getString(R.string.app_name), "Add Button Clicked");
 	}

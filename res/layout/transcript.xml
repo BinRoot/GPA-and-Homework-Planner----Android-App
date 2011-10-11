@@ -9,32 +9,25 @@
 		style="@style/TopBar_relative">
 		<Button 
 			android:id="@+id/button_main_logo"
-			android:layout_width="80dip"
-			android:layout_height="wrap_content"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
 			android:layout_alignParentLeft="true"
 			android:layout_centerVertical="true"
+			android:layout_toLeftOf="@+id/button_main_up"
 			android:textAppearance="@android:style/TextAppearance.Large"
-			android:text="&lt;&lt;"
+			android:text="&lt; LOGO"
 			android:onClick="backButtonClicked"/>
 			
 		<Button 
 			android:id="@+id/button_main_up"
-			android:layout_width="80dip"
-			android:layout_height="wrap_content"
-			android:layout_centerVertical="true"
-			android:layout_toRightOf="@+id/button_main_logo"
-			android:textAppearance="@android:style/TextAppearance.Large"
-			android:text=" ^ "
-			android:onClick="upButtonClicked"/>
-			
-		<TextView
 			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
+			android:layout_height="fill_parent"
 			android:layout_alignParentRight="true"
 			android:layout_centerVertical="true"
-			android:layout_marginRight="20dip"
 			android:textAppearance="@android:style/TextAppearance.Large"
-			android:text="Grades"/>
+			android:text="  ^  "
+			android:onClick="upButtonClicked"/>
+		
 	</RelativeLayout>
 
 	<ListView 

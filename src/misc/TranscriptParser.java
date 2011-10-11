@@ -98,4 +98,23 @@ public class TranscriptParser {
 
 	}
 	
+	
+	public void deleteClass(String period, String classTitle) {
+		try {
+			JSONArray ja = jo.getJSONArray(period);
+
+			JSONArray jb = new JSONArray();
+			for(int i=0; i<ja.length(); i++) {
+				JSONObject classObj = ja.getJSONObject(i);
+				
+				if(!classObj.getString("title").equals(classTitle)) {
+					jb.put(classObj);
+				}
+			}
+			
+			jo.remove(period);
+			jo.accumulate(period, jb);
+
+		} catch (JSONException e) { }
+	}
 }

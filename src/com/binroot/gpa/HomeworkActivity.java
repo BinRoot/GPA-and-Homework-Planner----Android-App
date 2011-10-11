@@ -166,6 +166,9 @@ public class HomeworkActivity extends Activity {
 			
 			return v;
 		}
-		
+	}
+	
+	public void logoClicked(View v) {
+		HomeworkActivity.this.finish();
 	}
 }

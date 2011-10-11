@@ -14,7 +14,8 @@
 			android:textAppearance="@android:style/TextAppearance.Large"
 			android:layout_toLeftOf="@+id/button_hw_option"
 			android:layout_alignParentLeft="true"
-			android:text="LOGO" />
+			android:onClick="logoClicked"
+			android:text="&lt; LOGO" />
 		<Button
 			android:id="@+id/button_hw_option"
 			android:layout_width="wrap_content"
