@@ -52,10 +52,15 @@ public class TranscriptActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.transcript);
+		
+		
+		Bundle extras = this.getIntent().getExtras();
 
-		
+		if(extras != null ) {
+			period = extras.getString("period");
+		}
+
 		lv = (ListView) findViewById(R.id.list_transcript);
-		
 		
 		storageInit(); // must call after lv is initialized
 		
@@ -110,8 +115,8 @@ public class TranscriptActivity extends Activity {
 			}
 			
 		}
+		
 		else { // File exists, display classes of most recent year to listview
-
 			StringBuilder total = null;
 			try {
 				BufferedReader r = new BufferedReader(new InputStreamReader(fis));
@@ -174,8 +179,6 @@ public class TranscriptActivity extends Activity {
 						if(classJSON != null) {
 							try {
 
-								Log.d(getString(R.string.app_name), "in try1...");
-								
 								String title = classJSON.getString("title");
 								int gradeGoal = classJSON.getInt("gradeGoal");
 								int gradeMain = classJSON.getInt("gradeMain");
@@ -285,25 +288,24 @@ public class TranscriptActivity extends Activity {
 				if(getItem(position).getSelectMode()==true) {
 					((Button)v.findViewById(R.id.button_edit_classTitle)).setBackgroundDrawable(getResources().getDrawable(android.R.drawable.ic_menu_edit));
 					((Button)v.findViewById(R.id.button_edit_classTitle)).setVisibility(View.VISIBLE);
-					((Button)v.findViewById(R.id.text_transcript_classTitle)).setVisibility(View.VISIBLE);
+					((TextView)v.findViewById(R.id.text_transcript_classTitle)).setVisibility(View.VISIBLE);
 					((EditText)v.findViewById(R.id.edit_editclass_title)).setVisibility(View.GONE);
 				}
 				else if(getItem(position).getEditMode()==true) {
 					((Button)v.findViewById(R.id.button_edit_classTitle)).setVisibility(View.VISIBLE);
 					((Button)v.findViewById(R.id.button_edit_classTitle)).setBackgroundDrawable(getResources().getDrawable(android.R.drawable.ic_menu_add));
-					((Button)v.findViewById(R.id.text_transcript_classTitle)).setVisibility(View.GONE);
+					((TextView)v.findViewById(R.id.text_transcript_classTitle)).setVisibility(View.GONE);
 					((EditText)v.findViewById(R.id.edit_editclass_title)).setVisibility(View.VISIBLE);
-					
 					((EditText)v.findViewById(R.id.edit_editclass_title)).setText(classList.get(position).getTitle());
 					
 				}
 				else {
 					((Button)v.findViewById(R.id.button_edit_classTitle)).setVisibility(View.GONE);
-					((Button)v.findViewById(R.id.text_transcript_classTitle)).setVisibility(View.VISIBLE);
+					((TextView)v.findViewById(R.id.text_transcript_classTitle)).setVisibility(View.VISIBLE);
 					((EditText)v.findViewById(R.id.edit_editclass_title)).setVisibility(View.GONE);
 				}
 				
-				((Button)v.findViewById(R.id.text_transcript_classTitle)).setText(classList.get(position).getTitle());
+				((TextView)v.findViewById(R.id.text_transcript_classTitle)).setText(classList.get(position).getTitle());
 				((TextView)v.findViewById(R.id.text_transcript_gradeMain)).setText(numToGrade(classList.get(position).getGradeMain()));
 				((TextView)v.findViewById(R.id.text_transcript_credits)).setText(classList.get(position).getCredits()+"");
 				
@@ -385,7 +387,7 @@ public class TranscriptActivity extends Activity {
 		
 		RelativeLayout vP = (RelativeLayout)v.getParent();
 		
-		Button tv = (Button)vP.findViewById(R.id.text_transcript_classTitle);
+		TextView tv = (TextView)vP.findViewById(R.id.text_transcript_classTitle);
 		String title = tv.getText().toString();
 		
 		

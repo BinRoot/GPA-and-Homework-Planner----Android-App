@@ -11,6 +11,7 @@ public class Constants {
 	public static int Winter = 4;
 	
 	public static String File_TranscriptList = "AcademicPeriodList";
+	public static String File_MainSettings = "MainSettings";
 	
 	public static int GradeAp = 0;
 	public static int GradeAf = 1;

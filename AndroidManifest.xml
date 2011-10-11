@@ -24,6 +24,10 @@
 		<activity 
 			android:name=".TranscriptActivity">
 		</activity>
+		
+		<activity 
+			android:name=".HomeworkActivity">
+		</activity>
 
 	</application>
 </manifest>

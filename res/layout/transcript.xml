@@ -25,7 +25,6 @@
 			android:layout_toRightOf="@+id/button_main_logo"
 			android:textAppearance="@android:style/TextAppearance.Large"
 			android:text=" ^ "
-			
 			android:onClick="upButtonClicked"/>
 			
 		<TextView
@@ -33,8 +32,9 @@
 			android:layout_height="wrap_content"
 			android:layout_alignParentRight="true"
 			android:layout_centerVertical="true"
-			android:layout_marginRight="10dip"
-			android:text="Transcript"/>
+			android:layout_marginRight="20dip"
+			android:textAppearance="@android:style/TextAppearance.Large"
+			android:text="Grades"/>
 	</RelativeLayout>
 
 	<ListView 

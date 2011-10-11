@@ -36,7 +36,7 @@
 				android:id="@+id/button_main_transcript"
 				android:layout_width="fill_parent"
 				android:layout_height="200dip"
-				android:text="Transcript"
+				android:text="Grades"
 				android:layout_weight="1"/>
 		</LinearLayout>
 		
