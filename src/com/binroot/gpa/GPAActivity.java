@@ -35,7 +35,7 @@ public class GPAActivity extends Activity {
 
 		int mode = -1;
 		
-		public MainButtonListener(int mode) {
+		 public MainButtonListener(int mode) {
 			this.mode = mode;
 		}
 		

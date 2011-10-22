@@ -5,49 +5,54 @@
 	android:layout_height="fill_parent">
 
 	<RelativeLayout
-		android:id="@+id/relative_hw_top"
+		android:id="@+id/relative_todo_top"
 		style="@style/TopBar_relative">
 		<Button
-			android:id="@+id/button_hw_logo"
+			android:id="@+id/button_todo_logo"
 			android:layout_width="fill_parent"
 			android:layout_height="fill_parent"
 			android:textAppearance="@android:style/TextAppearance.Large"
-			android:layout_toLeftOf="@+id/button_hw_option"
+			android:layout_toLeftOf="@+id/button_todo_option"
 			android:layout_alignParentLeft="true"
 			android:onClick="logoClicked"
 			android:text="&lt; LOGO" />
 		<Button
-			android:id="@+id/button_hw_option"
+			android:id="@+id/button_todo_option"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_centerVertical="true"
 			android:layout_alignParentRight="true"
-			android:background="@android:drawable/ic_menu_search"
+			android:background="@android:drawable/ic_menu_add"
 			android:textAppearance="@android:style/TextAppearance.Large"
-			android:text=" ! " />
+			android:text=" + " />
 	</RelativeLayout>
 
-	<RelativeLayout
-		android:id="@+id/relative_hw_text"
+	<RelativeLayout 
+		android:id="@+id/relative_todo_title"
 		android:layout_width="fill_parent"
 		android:layout_height="50dip"
-		android:layout_below="@id/relative_hw_top">
-		<TextView
+		android:layout_below="@id/relative_todo_top">
+		<TextView 
+			android:id="@+id/text_todo_hw"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_centerInParent="true"
+			android:text="Homework"
 			android:textAppearance="@android:style/TextAppearance.Large"
-			android:text="Homework" />
+			android:layout_centerHorizontal="true"/>
+		<TextView 
+			android:id="@+id/text_todo_title"
+			android:layout_below="@id/text_todo_hw"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Homework"
+			android:layout_centerHorizontal="true"/>
 	</RelativeLayout>
 
-	<GridView
-		android:id="@+id/grid_hw"
+	<ListView 
+		android:id="@+id/list_todo"
+		android:layout_below="@id/relative_todo_title"
 		android:layout_width="fill_parent"
-		android:layout_height="fill_parent"
-		android:layout_below="@+id/relative_hw_text"
-		android:numColumns="2">
-	</GridView>
-
-
+		android:layout_height="fill_parent">
+	</ListView>
 
 </RelativeLayout>

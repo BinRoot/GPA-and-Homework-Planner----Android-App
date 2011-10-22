@@ -28,6 +28,10 @@
 		<activity 
 			android:name=".HomeworkActivity">
 		</activity>
+		
+		<activity 
+			android:name=".TodoActivity">
+		</activity>
 
 	</application>
 </manifest>

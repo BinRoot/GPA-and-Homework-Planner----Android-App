@@ -15,21 +15,26 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
 
 public class HomeworkActivity extends Activity {
 	
 	String period = null;
 	
 	GridView g;
+	GridAdapter ga;
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -57,7 +62,7 @@ public class HomeworkActivity extends Activity {
 		}
 
 		if(fis == null) { // File doesn't exist. Must be a new user.
-			// Error message
+			// TODO: Error message
 		}
 		else {
 			StringBuilder total = null;
@@ -99,11 +104,14 @@ public class HomeworkActivity extends Activity {
 				e.printStackTrace();
 			}
 			
-			g.setAdapter(new GridAdapter(classes));
+			ga = new GridAdapter(classes);
+			g.setAdapter(ga);
+			g.setOnItemClickListener(ga);
 		}
 	}
 	
-	public class GridAdapter extends BaseAdapter {
+	
+	public class GridAdapter extends BaseAdapter implements OnItemClickListener{
 
 		ArrayList<String> classes;
 		
@@ -117,7 +125,7 @@ public class HomeworkActivity extends Activity {
 		}
 
 		@Override
-		public Object getItem(int position) {
+		public String getItem(int position) {
 			return classes.get(position);
 		}
 
@@ -166,6 +174,16 @@ public class HomeworkActivity extends Activity {
 			
 			return v;
 		}
+		
+		@Override
+		public void onItemClick(AdapterView<?> arg0, View arg1, int pos, long arg3) {
+			String title = getItem(pos);
+			Intent i = new Intent(HomeworkActivity.this, TodoActivity.class);
+			i.putExtra("title", title);
+			i.putExtra("period", period);
+			startActivity(i);
+		}
+
 	}
 	
 	public void logoClicked(View v) {

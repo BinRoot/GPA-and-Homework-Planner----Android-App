@@ -12,6 +12,7 @@ public class Constants {
 	
 	public static String File_TranscriptList = "AcademicPeriodList";
 	public static String File_MainSettings = "MainSettings";
+	public static String File_Todo = "Todo";
 	
 	public static int GradeAp = 0;
 	public static int GradeAf = 1;

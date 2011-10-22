@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+	
+	<RelativeLayout
+		android:id="@+id/relative_todo_item"
+		android:layout_width="fill_parent"
+		android:layout_height="100dip"
+		android:background="@android:drawable/title_bar">
+		<RelativeLayout
+			android:id="@+id/relative_todo_priority"
+			android:layout_width="20dip"
+			android:layout_height="fill_parent">
+			
+		</RelativeLayout>
+		<RelativeLayout 
+			android:id="@+id/relative_todo_nonpriority"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:layout_toRightOf="@id/relative_todo_priority">
+			
+			<RelativeLayout 
+				android:id="@+id/relative_todo_tophalf"
+				android:layout_above="@+id/relative_todo_due"
+				android:layout_width="wrap_content"
+				android:layout_height="fill_parent">
+				
+				<RelativeLayout 
+					android:id="@+id/relative_todo_details"
+					android:layout_width="fill_parent"
+					android:layout_height="fill_parent"
+					android:layout_toLeftOf="@+id/relative_todo_check">
+					<TextView 
+						android:id="@+id/text_todo_details"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="some text"
+						android:padding="10dip"/>
+				</RelativeLayout>
+				
+				<RelativeLayout 
+					android:id="@+id/relative_todo_check"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_alignParentRight="true">
+					<CheckBox 
+						android:id="@+id/check_todo"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"/>
+				</RelativeLayout>
+			</RelativeLayout>
+			
+			<RelativeLayout 
+				android:id="@+id/relative_todo_due"
+				android:layout_width="fill_parent"
+				android:layout_height="30dip"
+				android:layout_alignParentBottom="true">
+			</RelativeLayout>
+			
+		</RelativeLayout>
+	</RelativeLayout>
+
+</RelativeLayout>
