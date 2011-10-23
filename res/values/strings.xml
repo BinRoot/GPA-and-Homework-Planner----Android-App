@@ -2,4 +2,10 @@
 <resources>
     <string name="hello">Hello World, GPAActivity!</string>
     <string name="app_name">GPA</string>
+    
+    <string-array name="rep_array">
+        <item>Does not repeat</item>
+        <item>Daily</item>
+        <item>Weekly</item>
+    </string-array>
 </resources>

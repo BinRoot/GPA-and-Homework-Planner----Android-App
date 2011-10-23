@@ -12,18 +12,19 @@
 			android:layout_width="fill_parent"
 			android:layout_height="fill_parent"
 			android:textAppearance="@android:style/TextAppearance.Large"
-			android:layout_toLeftOf="@+id/button_todo_option"
+			android:layout_toLeftOf="@+id/button_todo_add"
 			android:layout_alignParentLeft="true"
 			android:onClick="logoClicked"
 			android:text="&lt; LOGO" />
 		<Button
-			android:id="@+id/button_todo_option"
+			android:id="@+id/button_todo_add"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_centerVertical="true"
 			android:layout_alignParentRight="true"
 			android:background="@android:drawable/ic_menu_add"
 			android:textAppearance="@android:style/TextAppearance.Large"
+			android:onClick="addClicked"
 			android:text=" + " />
 	</RelativeLayout>
 

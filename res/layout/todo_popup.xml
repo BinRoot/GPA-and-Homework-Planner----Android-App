@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:padding="20dip">
+
+	<ScrollView 
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content">
+		<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="fill_parent"
+			android:orientation="vertical">
+			<RelativeLayout
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content">
+				<TextView
+					android:id="@+id/text_todo_pop_desc"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="Description" />
+				<EditText
+					android:id="@+id/edit_todo_pop_desc"
+					android:layout_below="@+id/text_todo_pop_desc"
+					android:layout_width="fill_parent"
+					android:layout_height="100dip"
+					android:hint="(example: Read Chapter 3)" />
+			</RelativeLayout>
+	
+			<RelativeLayout
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="10dip">
+				<TextView
+					android:id="@+id/text_todo_pop_due"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="Due" />
+					
+				<Button
+					android:id="@+id/button_todo_popup_date"
+					android:layout_height="wrap_content"
+					android:layout_width="fill_parent"
+					android:layout_below="@id/text_todo_pop_due"> </Button>
+	
+			</RelativeLayout>
+	
+			<RelativeLayout
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="10dip">
+				<TextView
+					android:id="@+id/text_todo_pop_rep"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="Repetition" />
+				<Spinner
+					android:id="@+id/spinner_todo_pop_rep"
+					android:layout_height="wrap_content"
+					android:layout_width="fill_parent"
+					android:layout_below="@id/text_todo_pop_rep"
+					android:layout_alignParentLeft="true">
+				</Spinner>
+				<Button 
+					android:id="@+id/button_todo_pop_rep_days"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_below="@id/spinner_todo_pop_rep"
+					android:background="@android:drawable/ic_menu_preferences"
+					android:visibility="gone"/>
+				<TextView 
+					android:id="@+id/text_todo_pop_rep_days"
+					android:layout_width="wrap_content"
+					android:layout_height="fill_parent"
+					android:gravity="center"
+					android:layout_below="@id/spinner_todo_pop_rep"
+					android:layout_toRightOf="@id/button_todo_pop_rep_days"
+					android:visibility="gone"/>
+			</RelativeLayout>
+	
+	
+			<RelativeLayout
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="10dip"
+				android:layout_marginBottom="50dip">
+				<TextView
+					android:id="@+id/text_todo_pop_priority"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_centerVertical="true"
+					android:text="Priority" />
+				<RatingBar
+					android:id="@+id/rating_todo_popup"
+					android:layout_height="wrap_content"
+					android:layout_width="wrap_content"
+					android:layout_toRightOf="@id/text_todo_pop_priority"
+					android:layout_marginLeft="10dip"
+					android:rating="1"
+					android:stepSize="1"
+					android:numStars="3">
+				</RatingBar>
+			</RelativeLayout>
+	
+		</LinearLayout>
+	</ScrollView>
+
+	<Button
+		android:id="@+id/button_todo_popup_done"
+		android:layout_width="fill_parent"
+		android:layout_alignParentBottom="true"
+		android:layout_height="wrap_content"
+		android:text="Done" />
+
+</RelativeLayout>
