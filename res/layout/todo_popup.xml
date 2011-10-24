@@ -40,6 +40,7 @@
 					
 				<Button
 					android:id="@+id/button_todo_popup_date"
+					android:background="@android:drawable/btn_dropdown"
 					android:layout_height="wrap_content"
 					android:layout_width="fill_parent"
 					android:layout_below="@id/text_todo_pop_due"> </Button>

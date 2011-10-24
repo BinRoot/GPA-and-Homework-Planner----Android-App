@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.zip.DataFormatException;
 
@@ -63,6 +65,7 @@ public class TodoActivity extends Activity {
 	static final int DATE_DIALOG_ID = 0;
 	boolean weekly = false;
 	TodoListAdapter ta;
+	boolean editing = false;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -80,11 +83,13 @@ public class TodoActivity extends Activity {
 		lv.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-				Toast.makeText(TodoActivity.this, "selected "+arg2, Toast.LENGTH_LONG).show();
-				// TODO show popup
+				//Toast.makeText(TodoActivity.this, "selected "+arg2, Toast.LENGTH_LONG).show();
+				
 				addClickedDefaults(null, ta.getItem(arg2));
 			}
 		});
+		
+		
 		
 	}
 
@@ -224,6 +229,36 @@ public class TodoActivity extends Activity {
 
 		public TodoListAdapter(ArrayList<TodoItem> todoList) {
 			this.todoList = todoList;
+			notifyDataSetChanged();
+		}
+		
+		@Override
+		public void notifyDataSetChanged() {
+			super.notifyDataSetChanged();
+			
+			Log.d(getString(R.string.app_name), "sorting!");
+			
+			Collections.sort(todoList, new Comparator<TodoItem>() {
+				@Override
+				public int compare(TodoItem o1, TodoItem o2) {
+					String date1Str = o1.getDue().toString();
+					String date1Arr[] = date1Str.split(" ");
+					String year1Str = date1Arr[5];
+					String month1Str = monthToNum(date1Arr[1])+"";
+					String day1Str = date1Arr[2];
+					date1Str = year1Str+month1Str+day1Str;
+					
+					String date2Str = o2.getDue().toString();
+					String date2Arr[] = date2Str.split(" ");
+					String year2Str = date2Arr[5];
+					String month2Str = monthToNum(date2Arr[1])+"";
+					String day2Str = date2Arr[2];
+					date2Str = year2Str+month2Str+day2Str;
+					
+					return date1Str.compareTo(date2Str);
+				}
+			});
+			
 		}
 		
 		public void addItem(TodoItem ti) {
@@ -288,7 +323,14 @@ public class TodoActivity extends Activity {
 	
 	AlertDialog alert;
 	
-	public void addClickedDefaults(View v, TodoItem ti) {
+	public void addClickedDefaults(View v, final TodoItem ti) {
+		// TODO: fix edit vs add
+		if(v==null) {
+			editing = true;
+		}
+		else {
+			editing = false;
+		}
 		
 		final View todoView = this.getLayoutInflater().inflate(R.layout.todo_popup, null);
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -345,10 +387,15 @@ public class TodoActivity extends Activity {
 		if(ti!=null) {
 			if(ti.getWeekly()) {
 				sp.setSelection(2);
-				
 			}
 			
 			boolean daily = true;
+			for(int i=0; i<ti.getDays().length; i++) {
+				if(ti.getDays()[i]==false) {
+					daily = false;
+				}
+			}
+			
 			if(daily) {
 				sp.setSelection(1);
 			}
@@ -530,12 +577,11 @@ public class TodoActivity extends Activity {
 						}
 						else days[i]=false;
 					}
-					
 				}
 				
 				
-				TodoItem ti = new TodoItem(desc, d, priority, days, weekly, done);
-				Log.d(getString(R.string.app_name), "ti1: "+ti);
+				TodoItem newti = new TodoItem(desc, d, priority, days, weekly, done);
+				Log.d(getString(R.string.app_name), "ti1: "+newti);
 				
 				for(int i=0; i<ta.todoList.size(); i++) {
 					Log.d(getString(R.string.app_name), "ti2: "+ta.todoList.get(i));
@@ -543,13 +589,24 @@ public class TodoActivity extends Activity {
 				
 				
 				// TODO: fix bug: should not be able to add identical items
-				TodoParser.getInstance().addItem(ti);
-				Log.d(getString(R.string.app_name), "jobject is "+TodoParser.getInstance().getJSON());
-				updateFile(TodoParser.getInstance().getJSON());
-				ta.addItem(ti);
-				ta.notifyDataSetChanged();
 				
-				
+				if(!editing) {
+					TodoParser.getInstance().addItem(newti);
+					Log.d(getString(R.string.app_name), "jobject is "+TodoParser.getInstance().getJSON());
+					updateFile(TodoParser.getInstance().getJSON());
+					ta.addItem(newti);
+					ta.notifyDataSetChanged();
+				}
+				else {
+					//Toast.makeText(TodoActivity.this, "editing", Toast.LENGTH_LONG).show();
+					
+					TodoParser.getInstance().editItem(ti, newti);
+					Log.d(getString(R.string.app_name), "jobject is "+TodoParser.getInstance().getJSON());
+					updateFile(TodoParser.getInstance().getJSON());
+					ta.todoList.remove(ti);
+					ta.addItem(newti);
+					ta.notifyDataSetChanged();
+				}
 				
 				TodoActivity.this.alert.dismiss();
 				

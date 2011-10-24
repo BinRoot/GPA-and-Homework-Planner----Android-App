@@ -312,7 +312,7 @@ public class TranscriptActivity extends Activity {
 					((TextView)v.findViewById(R.id.text_transcript_classTitle)).setVisibility(View.GONE);
 					((EditText)v.findViewById(R.id.edit_editclass_title)).setVisibility(View.VISIBLE);
 					((EditText)v.findViewById(R.id.edit_editclass_title)).setText(classList.get(position).getTitle());
-					
+
 				}
 				else {
 					((Button)v.findViewById(R.id.button_edit_classTitle)).setVisibility(View.GONE);

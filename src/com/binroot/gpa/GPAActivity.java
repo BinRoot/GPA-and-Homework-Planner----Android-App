@@ -9,26 +9,31 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import org.json.JSONArray;
+import misc.Constants;
+import model.TodoItem;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import misc.Constants;
-import model.ClassItem;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
 
 public class GPAActivity extends Activity {
 	
 	Button transcriptBtn;
 	Button homeworkBtn;
-	
+	ListView lv;
 	String period = null;
 	
 	public class MainButtonListener implements OnClickListener {
@@ -72,6 +77,21 @@ public class GPAActivity extends Activity {
         homeworkBtn.setOnClickListener(new MainButtonListener(Constants.ButtonHomework));
         
         storageInit();
+        
+        lv = (ListView)findViewById(R.id.list_main_hw);
+        ArrayList<TodoItem> todoList = new ArrayList<TodoItem>();
+        todoList.add(new TodoItem("blah1", null, 0, null, false, false));
+        todoList.add(new TodoItem("blah2", null, 0, null, false, false));
+        todoList.add(new TodoItem("blah3", null, 0, null, false, false));
+        todoList.add(new TodoItem("blah4", null, 0, null, false, false));
+        todoList.add(new TodoItem("blah5", null, 0, null, false, false));
+        todoList.add(new TodoItem("blah6", null, 0, null, false, false));
+        todoList.add(new TodoItem("blah7", null, 0, null, false, false));
+        todoList.add(new TodoItem("blah8", null, 0, null, false, false));
+        TodoMainAdapter ta = new TodoMainAdapter(todoList);
+        
+        lv.setAdapter(ta);
+        ta.notifyDataSetChanged();
     }
     
     public void storageInit() {
@@ -146,6 +166,45 @@ public class GPAActivity extends Activity {
 				} catch (JSONException e) {	}
 			}
 		}
+    }
+    
+    public class TodoMainAdapter extends BaseAdapter {
+
+    	ArrayList<TodoItem> todoList;
+    	LayoutInflater li;
+    	
+    	public TodoMainAdapter(ArrayList<TodoItem> todoList) {
+    		this.todoList = todoList;
+    		li = getLayoutInflater();
+    	}
+    	
+		@Override
+		public int getCount() {
+			return todoList.size();
+		}
+
+		@Override
+		public TodoItem getItem(int position) {
+			return todoList.get(position);
+		}
+
+		@Override
+		public long getItemId(int position) {
+			return position;
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			View v = convertView;
+			if(v==null) {
+				v = getLayoutInflater().inflate(R.layout.todo_main_item, null);
+			}
+			
+			
+			((TextView)v.findViewById(R.id.text_todo_main_desc)).setText( getItem(position).getDesc() );
+			return v;
+		}
+    	
     }
     
     public static int getSeason(int month) {

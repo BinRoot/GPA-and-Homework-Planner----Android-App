@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+
+	<LinearLayout 
+		android:layout_width="fill_parent"
+		android:layout_height="100dip"
+		android:orientation="horizontal">
+		<RelativeLayout 
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_weight="5"
+			android:layout_gravity="center"
+			android:layout_margin="10dip">
+			<TextView 
+				android:id="@+id/text_todo_main_title"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignParentTop="true"
+				android:textAppearance="@android:style/TextAppearance.Small"
+				android:text="CS 2102"/>
+			<TextView 
+				android:id="@+id/text_todo_main_desc"
+				android:layout_below="@id/text_todo_main_title"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textAppearance="@android:style/TextAppearance.Large"
+				android:text="Read Ch 3"/>
+		</RelativeLayout>
+		
+		<TextView 
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:layout_weight="1"
+			android:text="Nov 1"/>
+		
+	</LinearLayout>
+
+</RelativeLayout>

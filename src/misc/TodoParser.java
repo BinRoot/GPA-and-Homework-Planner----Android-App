@@ -66,6 +66,11 @@ public class TodoParser {
 		}
 	}
 	
+	public void editItem(TodoItem oldItem, TodoItem newItem) {
+		deleteItem(oldItem);
+		addItem(newItem);
+	}
+	
 	public void deleteItem(TodoItem ti) {
 		String desc = ti.getDesc();
 		String due = ti.getDue().toString();

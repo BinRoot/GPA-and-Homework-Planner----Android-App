@@ -37,8 +37,8 @@
 	    	android:layout_height="fill_parent"
 	    	android:layout_marginRight="50dip"
 	    	android:paddingLeft="20dip"
-	    	android:inputType="textNoSuggestions"
-	    	android:visibility="gone"/>
+	    	android:visibility="gone"
+	    	android:inputType="textAutoCorrect"/>
     </RelativeLayout>
     
 	<LinearLayout 

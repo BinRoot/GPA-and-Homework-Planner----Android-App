@@ -1,6 +1,10 @@
 package model;
 
 import misc.Constants;
+import android.view.View;
+import android.widget.EditText;
+
+import com.binroot.gpa.R;
 
 public class ClassItem {
 	private String title = "Enter Class Title";
@@ -10,6 +14,8 @@ public class ClassItem {
 	private float credits = 3;
 	private boolean selectMode = true;
 	private boolean editMode = false;
+	public EditText et;
+	
 	
 	public ClassItem(String title) {
 		this.title = title;
