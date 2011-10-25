@@ -47,7 +47,7 @@
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
 		android:handle="@+id/handle"
-		android:content="@+id/content"
+		android:content="@+id/list_main_hw"
 		android:orientation="vertical"
 		android:layout_alignParentBottom="true">
 		<Button
@@ -55,17 +55,13 @@
 			android:layout_height="80dip"
 			android:text="Due Soon (0)"
 			android:id="@+id/handle"></Button>
-		<LinearLayout
-			android:id="@+id/content"
-			android:layout_width="fill_parent"
-			android:layout_height="fill_parent"
-			android:background="@android:drawable/title_bar">
+		
 			<ListView 
 				android:id="@+id/list_main_hw"
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content">
 			</ListView>
-		</LinearLayout>
+		
 	</SlidingDrawer>
 
 

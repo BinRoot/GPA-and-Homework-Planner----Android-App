@@ -88,9 +88,7 @@ public class TodoActivity extends Activity {
 				addClickedDefaults(null, ta.getItem(arg2));
 			}
 		});
-		
-		
-		
+
 	}
 
 	public void storageInit() {
@@ -198,7 +196,7 @@ public class TodoActivity extends Activity {
 							boolean weekly = todoItemJSON.getBoolean("weekly");
 							boolean done = todoItemJSON.getBoolean("done");
 
-							TodoItem ti = new TodoItem(desc, due, priority, days, weekly, done);
+							TodoItem ti = new TodoItem(desc, due, priority, days, weekly, done, title);
 
 							Log.d(getString(R.string.app_name), "adding todo item... "+ti);
 
@@ -245,6 +243,9 @@ public class TodoActivity extends Activity {
 					String date1Arr[] = date1Str.split(" ");
 					String year1Str = date1Arr[5];
 					String month1Str = monthToNum(date1Arr[1])+"";
+					if(month1Str.length()==1) {
+						month1Str = "0"+month1Str;
+					}
 					String day1Str = date1Arr[2];
 					date1Str = year1Str+month1Str+day1Str;
 					
@@ -252,6 +253,9 @@ public class TodoActivity extends Activity {
 					String date2Arr[] = date2Str.split(" ");
 					String year2Str = date2Arr[5];
 					String month2Str = monthToNum(date2Arr[1])+"";
+					if(month2Str.length()==1) {
+						month2Str = "0"+month2Str;
+					}
 					String day2Str = date2Arr[2];
 					date2Str = year2Str+month2Str+day2Str;
 					
@@ -306,12 +310,9 @@ public class TodoActivity extends Activity {
 					todoList.remove(position);
 					ta.notifyDataSetChanged();
 					
-					
 				}
 			}); 
 				
-			
-			
 			return v;
 		}
 
@@ -322,15 +323,19 @@ public class TodoActivity extends Activity {
 	}
 	
 	AlertDialog alert;
+	boolean editing2 = false;
 	
 	public void addClickedDefaults(View v, final TodoItem ti) {
 		// TODO: fix edit vs add
 		if(v==null) {
 			editing = true;
+			editing2 = true;
 		}
 		else {
 			editing = false;
+			editing2 = false;
 		}
+		
 		
 		final View todoView = this.getLayoutInflater().inflate(R.layout.todo_popup, null);
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -355,8 +360,6 @@ public class TodoActivity extends Activity {
 		}
 		else {
 			Log.d("GPA date", ti.getDue().getYear()+", "+ti.getDue().getMonth()+", "+ti.getDue().getDay());
-		
-			
 			Log.d("GPA date", ti.getDue()+"");
 			String monthStr = ti.getDue().toString().split(" ")[1];
 			String dayStr = ti.getDue().toString().split(" ")[2];
@@ -384,25 +387,34 @@ public class TodoActivity extends Activity {
 				"Thursday", "Friday", "Saturday"};
 		final boolean daysPicked[] = {false, false, false, false, false, false, false};
 		
-		if(ti!=null) {
+		if(ti!=null) { // TODO: repetition is not read properly
+			
+			Log.d("worked", "opening: title="+ti.getClassTitle()+", weekly="+ti.getWeekly()
+					+", "+ti.getDays()[0]+" "+ti.getDays()[1]+" "+ti.getDays()[2]+" "+ti.getDays()[3]
+					                       +" "+ti.getDays()[4]+" "+ti.getDays()[5]+" "+ti.getDays()[6]);
+			// TODO: text view to show days is missing
+			
 			if(ti.getWeekly()) {
 				sp.setSelection(2);
+				
 			}
-			
-			boolean daily = true;
-			for(int i=0; i<ti.getDays().length; i++) {
-				if(ti.getDays()[i]==false) {
-					daily = false;
+			else {
+				boolean daily = true;
+				for(int i=0; i<ti.getDays().length; i++) {
+					if(ti.getDays()[i]==false) {
+						daily = false;
+						break;
+					}
+				}
+				
+				if(daily) {
+					sp.setSelection(1);
+				}
+				else {
+					sp.setSelection(0);
 				}
 			}
 			
-			if(daily) {
-				sp.setSelection(1);
-			}
-			
-			if(!daily && !ti.getWeekly()) {
-				sp.setSelection(0);
-			}
 			
 			for(int i=0; i<7; i++) {
 				daysPicked[i] = ti.getDays()[i];
@@ -416,7 +428,11 @@ public class TodoActivity extends Activity {
 				}
 			}
 			sb.append(")");
-			((TextView)todoView.findViewById(R.id.text_todo_pop_rep_days)).setText(sb.toString());
+			
+			if(ti.getWeekly()) {
+				((TextView)todoView.findViewById(R.id.text_todo_pop_rep_days)).setText(sb.toString());
+				((TextView)todoView.findViewById(R.id.text_todo_pop_rep_days)).setVisibility(View.VISIBLE);
+			}
 			
 			((RatingBar)todoView.findViewById(R.id.rating_todo_popup)).setRating(ti.getPriority());
 			
@@ -427,11 +443,11 @@ public class TodoActivity extends Activity {
 		
 		sp.setOnItemSelectedListener(new OnItemSelectedListener() {
 			
-			
 			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				Log.d(getString(R.string.app_name), "selected "+arg2);
-				if(arg2==2) {
+				if(arg2==2 && !editing2) {
+					
 					AlertDialog.Builder builder = new AlertDialog.Builder(TodoActivity.this);
 					
 					builder.setMultiChoiceItems(days, daysPicked, new OnMultiChoiceClickListener() {
@@ -496,8 +512,8 @@ public class TodoActivity extends Activity {
 					for(int i=0; i<7; i++) {
 						daysPicked[i] = false;
 					}
-					
 				}
+				editing2 = false;
 			}
 
 			@Override
@@ -567,9 +583,10 @@ public class TodoActivity extends Activity {
 				boolean days[] = daysPicked;
 			
 				if(!weekly) {
-					Calendar cal = Calendar.getInstance();
-					cal.setTime(d);
-					int dow = cal.get(Calendar.DAY_OF_WEEK);
+					String durArr[] = d.toString().split(" ");
+					String dowStr = durArr[0];
+
+					int dow = dowToNum(dowStr);
 					
 					for(int i=0; i<7; i++) {
 						if(i==dow) {
@@ -579,13 +596,18 @@ public class TodoActivity extends Activity {
 					}
 				}
 				
-				
-				TodoItem newti = new TodoItem(desc, d, priority, days, weekly, done);
+				Log.d(getString(R.string.app_name), "*-*weekly: "+weekly);
+
+				TodoItem newti = new TodoItem(desc, d, priority, days, weekly, done, title);
 				Log.d(getString(R.string.app_name), "ti1: "+newti);
 				
 				for(int i=0; i<ta.todoList.size(); i++) {
 					Log.d(getString(R.string.app_name), "ti2: "+ta.todoList.get(i));
 				}
+				
+				Log.d("worked", "saving: title="+newti.getClassTitle()+", weekly="+newti.getWeekly()
+						+", "+newti.getDays()[0]+" "+newti.getDays()[1]+" "+newti.getDays()[2]+" "+newti.getDays()[3]
+						                       +" "+newti.getDays()[4]+" "+newti.getDays()[5]+" "+newti.getDays()[6]);
 				
 				
 				// TODO: fix bug: should not be able to add identical items
@@ -681,6 +703,13 @@ public class TodoActivity extends Activity {
 				"May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
 		for(int i=0; i<12; i++)
 			if(monthStr.equalsIgnoreCase(months[i])) return i;
+		return -1;
+	}
+	
+	int dowToNum(String dowStr) {
+		String days[] = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
+		for(int i=0; i<7; i++) 
+			if(dowStr.equalsIgnoreCase(days[i])) return i;
 		return -1;
 	}
 	

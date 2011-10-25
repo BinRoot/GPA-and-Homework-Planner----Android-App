@@ -8,11 +8,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 
 import misc.Constants;
 import misc.TranscriptParser;
 import model.ClassItem;
+import model.TodoItem;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,6 +24,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,6 +32,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnLongClickListener;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,6 +43,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.AdapterView.OnItemSelectedListener;
 
 public class TranscriptActivity extends Activity {
 
@@ -222,6 +227,7 @@ public class TranscriptActivity extends Activity {
 		TranscriptParser.getInstance().setJSON(jMain);
 		ta = new TranscriptAdapter(classList);
 		lv.setAdapter(ta);
+		
 	}
 
 
@@ -310,8 +316,11 @@ public class TranscriptActivity extends Activity {
 					((Button)v.findViewById(R.id.button_edit_classTitle)).setVisibility(View.VISIBLE);
 					((Button)v.findViewById(R.id.button_edit_classTitle)).setBackgroundDrawable(getResources().getDrawable(android.R.drawable.ic_menu_add));
 					((TextView)v.findViewById(R.id.text_transcript_classTitle)).setVisibility(View.GONE);
-					((EditText)v.findViewById(R.id.edit_editclass_title)).setVisibility(View.VISIBLE);
-					((EditText)v.findViewById(R.id.edit_editclass_title)).setText(classList.get(position).getTitle());
+					
+					EditText et = ((EditText)v.findViewById(R.id.edit_editclass_title));
+					
+					et.setVisibility(View.VISIBLE);
+					et.setText(classList.get(position).getTitle());
 
 				}
 				else {
@@ -328,7 +337,7 @@ public class TranscriptActivity extends Activity {
 					
 					@Override
 					public boolean onLongClick(View v) {
-						Toast.makeText(TranscriptActivity.this, "long clicked", Toast.LENGTH_LONG).show();
+						//Toast.makeText(TranscriptActivity.this, "long clicked", Toast.LENGTH_LONG).show();
 						
 						AlertDialog.Builder builder = new AlertDialog.Builder(TranscriptActivity.this);
 						builder.setMessage("Do you want to remove \""+ta.classList.get(position).getTitle()+"\" from this term?")
@@ -336,8 +345,11 @@ public class TranscriptActivity extends Activity {
 						       .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 						           public void onClick(DialogInterface dialog, int id) {
 						        	   
-						        	   // TODO reflect deletion on file
 						        	   TranscriptParser.getInstance().deleteClass(period, ta.classList.get(position).getTitle());
+						        	   
+						        	   String filename = Constants.File_Todo+"_"+period+"_"+ta.classList.get(position).getTitle();
+						        	   deleteFile(filename);
+
 						        	   jMain = TranscriptParser.getInstance().getJSON();
 						        	   updateFile();
 						        	   
@@ -400,7 +412,6 @@ public class TranscriptActivity extends Activity {
 		ta.addMode = true;
 		ta.notifyDataSetChanged();
 		
-		
 		Log.d(getString(R.string.app_name), "Add Button Clicked");
 	}
 	
@@ -415,22 +426,31 @@ public class TranscriptActivity extends Activity {
 		String title = et.getText().toString();
 		et.setText("");
 		
-		ClassItem ci = new ClassItem(title);
-		ci.setCredits(3);
-		ci.setGradeMain(Constants.GradeAf);
-		ci.setGradeGoal(Constants.GradeAp);
-		ci.setGradeGuar(Constants.GradeCf);
-		ta.addItem(ci);
-		ta.notifyDataSetChanged();
+		boolean contains = false;
+		for(int i=0; i<ta.classList.size(); i++) {
+			if( title.equals( ta.classList.get(i).getTitle()) ) {
+				contains = true;
+			}
+		}
 		
-		TranscriptParser.getInstance().addClass(period, 
-				ci.getTitle(), 
-				ci.getGradeMain(), 
-				ci.getGradeGoal(),
-				ci.getGradeGuar(), 
-				ci.getCredits());
-		jMain = TranscriptParser.getInstance().getJSON();
-		updateFile();
+		if(!contains) {
+			ClassItem ci = new ClassItem(title);
+			ci.setCredits(3);
+			ci.setGradeMain(Constants.GradeAf);
+			ci.setGradeGoal(Constants.GradeAp);
+			ci.setGradeGuar(Constants.GradeCf);
+			ta.addItem(ci);
+			ta.notifyDataSetChanged();
+			
+			TranscriptParser.getInstance().addClass(period, 
+					ci.getTitle(), 
+					ci.getGradeMain(), 
+					ci.getGradeGoal(),
+					ci.getGradeGuar(), 
+					ci.getCredits());
+			jMain = TranscriptParser.getInstance().getJSON();
+			updateFile();
+		}// TODO remove edit text when contains is true
 	}
 	
 	public void editButtonClicked(View v) {
@@ -447,16 +467,66 @@ public class TranscriptActivity extends Activity {
 				if(ta.classList.get(i).getEditMode()==false)
 					ta.itemEditMode(i);
 				else {
-					
-					
-					
 					TranscriptParser.getInstance().editClassTitle(period, ta.classList.get(i).getTitle(), ((EditText)vP.findViewById(R.id.edit_editclass_title)).getText().toString());
 					jMain = TranscriptParser.getInstance().getJSON();
 					updateFile();
 					
-					ta.classList.get(i).setTitle(((EditText)vP.findViewById(R.id.edit_editclass_title)).getText().toString());
+					// edit todo file as well
+					String filename = Constants.File_Todo+"_"+period+"_"+title;
+
+					FileInputStream fisTodo = null;
+					try {
+						fisTodo = openFileInput(filename);
+					} catch (FileNotFoundException e) {
+						Log.d(getString(R.string.app_name), "Could not find file "+filename);
+					}
 					
-					// TODO: check if it works: change JSON stored file
+					// open file
+					StringBuilder total = null;
+					try {
+						BufferedReader r = new BufferedReader(new InputStreamReader(fisTodo));
+						total = new StringBuilder();
+						String line;
+						while ((line = r.readLine()) != null) {
+							total.append(line);
+						}
+
+					} catch (IOException e) {
+						Log.d(getString(R.string.app_name), "Could not read buffer "+Constants.File_TranscriptList);
+					}
+					String todosJSONStr = total.toString();
+
+					Log.d(getString(R.string.app_name), "json from file: "+todosJSONStr);
+
+					JSONObject jMain2 = null;
+					try {
+						jMain2 = new JSONObject(todosJSONStr);
+					} catch (JSONException e) {
+						Log.d(getString(R.string.app_name), "not proper JSON: "+e.getMessage());
+					}
+					
+					deleteFile(filename);
+					// store jMain2 to file 
+					
+					String newFilename = Constants.File_Todo+"_"+period+"_"
+						+((EditText)vP.findViewById(R.id.edit_editclass_title)).getText().toString();
+					
+					FileOutputStream fos2 = null;
+					try {
+						fos2 = openFileOutput(newFilename, Context.MODE_PRIVATE);
+					} catch (FileNotFoundException e) {
+						Log.d(getString(R.string.app_name), "Could not create outputstream "+filename);
+					}
+
+					try {
+						fos2.write(jMain2.toString().getBytes());
+					} catch (IOException e) {
+						Log.d(getString(R.string.app_name), "Could not write to fos: "+e.getMessage());
+					}
+					
+					
+					// update list
+					ta.classList.get(i).setTitle(((EditText)vP.findViewById(R.id.edit_editclass_title)).getText().toString());
 					ta.itemSelectMode(i);
 				}
 				break;
@@ -471,6 +541,14 @@ public class TranscriptActivity extends Activity {
 	public void classTitledClicked(View v) {
 		Log.d(getString(R.string.app_name), "text clicked");
 		Toast.makeText(TranscriptActivity.this, "Clicked", Toast.LENGTH_LONG).show();
+		
+		TextView tv = (TextView)v;
+		String classTitle = tv.getText().toString();
+		
+		Intent i = new Intent(TranscriptActivity.this, TodoActivity.class);
+		i.putExtra("title", classTitle);
+		i.putExtra("period", period);
+		startActivity(i);
 	}
 	
 	public void gradesClicked(View v) {

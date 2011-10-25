@@ -10,13 +10,16 @@ public class TodoItem {
 	boolean []days;
 	private boolean weekly;
 	private boolean done;
+	String classTitle;
 	
-	public TodoItem (String desc, Date due, int priority, boolean [] days, boolean weekly, boolean done) {
+	public TodoItem (String desc, Date due, int priority, boolean [] days, boolean weekly, boolean done, String classTitle) {
 		this.desc = desc;
 		this.due = due;
 		this.priority = priority;
 		this.days = days;
+		this.weekly = weekly;
 		this.setDone(done);
+		this.classTitle = classTitle;
 	}
 
 	public String getDesc() {
@@ -98,5 +101,13 @@ public class TodoItem {
 
 	public boolean isDone() {
 		return done;
+	}
+	
+	public String getClassTitle() {
+		return classTitle;
+	}
+	
+	public void setClassTitle(String classTitle) {
+		this.classTitle = classTitle;
 	}
 }

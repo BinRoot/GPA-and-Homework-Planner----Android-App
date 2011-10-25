@@ -7,7 +7,8 @@
 	<LinearLayout 
 		android:layout_width="fill_parent"
 		android:layout_height="100dip"
-		android:orientation="horizontal">
+		android:orientation="horizontal"
+		android:background="@android:drawable/title_bar">
 		<RelativeLayout 
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
@@ -31,6 +32,7 @@
 		</RelativeLayout>
 		
 		<TextView 
+			android:id="@+id/text_todo_main_due"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_gravity="center"

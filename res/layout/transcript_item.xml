@@ -38,7 +38,8 @@
 	    	android:layout_marginRight="50dip"
 	    	android:paddingLeft="20dip"
 	    	android:visibility="gone"
-	    	android:inputType="textAutoCorrect"/>
+	    	android:inputType="textAutoCorrect"
+	    	/>
     </RelativeLayout>
     
 	<LinearLayout 
