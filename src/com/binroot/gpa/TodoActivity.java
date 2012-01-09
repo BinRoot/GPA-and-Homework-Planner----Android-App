@@ -11,11 +11,10 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.zip.DataFormatException;
+import java.util.GregorianCalendar;
 
 import misc.Constants;
 import misc.TodoParser;
-import misc.TranscriptParser;
 import model.TodoItem;
 
 import org.json.JSONArray;
@@ -29,8 +28,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnMultiChoiceClickListener;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -40,18 +39,16 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 
 public class TodoActivity extends Activity {
 
@@ -298,21 +295,106 @@ public class TodoActivity extends Activity {
 			String outDateStr = dateArr[1]+" "+dateArr[2];
 			
 			((TextView)v.findViewById(R.id.text_todo_item_every)).setText(outDateStr);
-
 			
-			Button cb = (Button)v.findViewById(R.id.button_check_todo);
+			final Button cb = (Button)v.findViewById(R.id.button_check_todo);
+			
+			Button db = (Button)v.findViewById(R.id.button_check_delete);
+			
+			if(getItem(position).getDone()) {
+				((RelativeLayout)v.findViewById(R.id.relative_todo_item))
+					.setBackgroundColor(Color.GRAY);
+				//cb.setVisibility(View.GONE);
+				cb.setBackgroundResource(R.drawable.bullet_accept);
+				db.setVisibility(View.VISIBLE);
+			}
+			else {
+				((RelativeLayout)v.findViewById(R.id.relative_todo_item))
+					.setBackgroundColor(getHashColor(getItem(position).getClassTitle()));
+				cb.setVisibility(View.VISIBLE);
+				cb.setBackgroundResource(R.drawable.bullet_accept_off);
+				db.setVisibility(View.GONE);
+			}
+			
+			db.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					TodoParser.getInstance().deleteItem(todoList.get(position));
+					updateFile(TodoParser.getInstance().getJSON());
+					todoList.remove(position);
+					ta.notifyDataSetChanged();
+				}
+			});
+			
 			cb.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
+
+					if(getItem(position).getDone()) {
+						TodoItem todoItem2 = new TodoItem(todoList.get(position));
+						todoItem2.setDone(false);
+						TodoParser.getInstance().editItem(todoList.get(position), todoItem2);
+						updateFile(TodoParser.getInstance().getJSON());
+						
+						todoList.get(position).setDone(false);
+						
+					}
+					else { // if not checked off as done
+						TodoItem todoItem2 = new TodoItem(todoList.get(position));
+						todoItem2.setDone(true);
+						TodoParser.getInstance().editItem(todoList.get(position), todoItem2);
+						updateFile(TodoParser.getInstance().getJSON());
+						
+						todoList.get(position).setDone(true);
+					}
+					
+					ta.notifyDataSetChanged();
+					
+					/*
 					TodoParser.getInstance().deleteItem(todoList.get(position));
 					updateFile(TodoParser.getInstance().getJSON());
 					
 					todoList.remove(position);
 					ta.notifyDataSetChanged();
+					*/
 					
 				}
 			}); 
-				
+			
+			int daysOffRes[] = { R.drawable.day_su, R.drawable.day_mo, R.drawable.day_tu,
+					R.drawable.day_we, R.drawable.day_th, R.drawable.day_fr, R.drawable.day_sa};
+			int daysOnRes[] = { R.drawable.day_su_s, R.drawable.day_mo_s, R.drawable.day_tu_s,
+					R.drawable.day_we_s, R.drawable.day_th_s, R.drawable.day_fr_s, R.drawable.day_sa_s};
+			int daysIds[] = {R.id.image_todo_item_day1, R.id.image_todo_item_day2, R.id.image_todo_item_day3,
+					R.id.image_todo_item_day4, R.id.image_todo_item_day5, R.id.image_todo_item_day6, R.id.image_todo_item_day7};
+			
+			boolean days[] = getItem(position).getDays();
+			for(int i=0; i<days.length; i++) {
+				if(days[i]) {
+					((ImageView)v.findViewById(daysIds[i])).setImageResource(daysOnRes[i]);
+				}
+				else {
+					((ImageView)v.findViewById(daysIds[i])).setImageResource(daysOffRes[i]);
+				}
+			}
+			
+			int priority = getItem(position).getPriority();
+			if(priority==1) {
+				((ImageView)v.findViewById(R.id.image_star2)).setVisibility(View.VISIBLE);
+				((ImageView)v.findViewById(R.id.image_star1)).setVisibility(View.INVISIBLE);
+				((ImageView)v.findViewById(R.id.image_star3)).setVisibility(View.INVISIBLE);
+			}
+			else if(priority==2) {
+				((ImageView)v.findViewById(R.id.image_star1)).setVisibility(View.VISIBLE);
+				((ImageView)v.findViewById(R.id.image_star2)).setVisibility(View.VISIBLE);
+				((ImageView)v.findViewById(R.id.image_star3)).setVisibility(View.INVISIBLE);
+			}
+			else {
+				((ImageView)v.findViewById(R.id.image_star2)).setVisibility(View.VISIBLE);
+				((ImageView)v.findViewById(R.id.image_star1)).setVisibility(View.VISIBLE);
+				((ImageView)v.findViewById(R.id.image_star3)).setVisibility(View.VISIBLE);
+			}
+			
 			return v;
 		}
 
@@ -326,7 +408,7 @@ public class TodoActivity extends Activity {
 	boolean editing2 = false;
 	
 	public void addClickedDefaults(View v, final TodoItem ti) {
-		// TODO: fix edit vs add
+	
 		if(v==null) {
 			editing = true;
 			editing2 = true;
@@ -357,10 +439,12 @@ public class TodoActivity extends Activity {
 			mYear = c.get(Calendar.YEAR);
 			mMonth = c.get(Calendar.MONTH);
 			mDay = c.get(Calendar.DAY_OF_MONTH);
+		
+			Log.d("cal","ti==null, "+mYear+"-"+mMonth+"-"+mDay);
 		}
 		else {
-			Log.d("GPA date", ti.getDue().getYear()+", "+ti.getDue().getMonth()+", "+ti.getDue().getDay());
-			Log.d("GPA date", ti.getDue()+"");
+			//Log.d("GPA date", ti.getDue().getYear()+", "+ti.getDue().getMonth()+", "+ti.getDue().getDay());
+			Log.d("cal", "ti!=null, "+ti.getDue());
 			String monthStr = ti.getDue().toString().split(" ")[1];
 			String dayStr = ti.getDue().toString().split(" ")[2];
 			String yearStr = ti.getDue().toString().split(" ")[5];
@@ -368,7 +452,8 @@ public class TodoActivity extends Activity {
 			int monthVal = monthToNum(monthStr);
 			
 			// black box bug fixing lol
-			mYear = Integer.parseInt(yearStr) - 1900;
+			// TODO: check up of year black boxing
+			mYear = Integer.parseInt(yearStr);
 			mMonth = monthVal;
 			mDay = Integer.parseInt(dayStr);
 		}
@@ -395,8 +480,8 @@ public class TodoActivity extends Activity {
 			// TODO: text view to show days is missing
 			
 			if(ti.getWeekly()) {
+				weekly = true;
 				sp.setSelection(2);
-				
 			}
 			else {
 				boolean daily = true;
@@ -429,9 +514,12 @@ public class TodoActivity extends Activity {
 			}
 			sb.append(")");
 			
+			Log.d("worked", "about to update textview: "+ti.getWeekly()+", "+sb.toString());
+			
 			if(ti.getWeekly()) {
-				((TextView)todoView.findViewById(R.id.text_todo_pop_rep_days)).setText(sb.toString());
+				((TextView)todoView.findViewById(R.id.text_todo_pop_rep_days)).setText(sb.toString());	
 				((TextView)todoView.findViewById(R.id.text_todo_pop_rep_days)).setVisibility(View.VISIBLE);
+				((Button)todoView.findViewById(R.id.button_todo_pop_rep_days)).setVisibility(View.VISIBLE);
 			}
 			
 			((RatingBar)todoView.findViewById(R.id.rating_todo_popup)).setRating(ti.getPriority());
@@ -449,6 +537,19 @@ public class TodoActivity extends Activity {
 				if(arg2==2 && !editing2) {
 					
 					AlertDialog.Builder builder = new AlertDialog.Builder(TodoActivity.this);
+					
+					Log.d("cal", "currently at "+mYear+"-"+mMonth+"-"+mDay);
+					
+					for(int i=0; i<7; i++) {
+						
+						// set days picked to current day
+						Date d = new Date(mYear-1900, mMonth, mDay);
+						
+						if(d.getDay()==i) {
+							Log.d("cal", "day "+i+" should be picked");
+							daysPicked[i]=true;
+						}
+					}
 					
 					builder.setMultiChoiceItems(days, daysPicked, new OnMultiChoiceClickListener() {
 
@@ -474,6 +575,29 @@ public class TodoActivity extends Activity {
 							}
 							sb.append(")");
 							((TextView)todoView.findViewById(R.id.text_todo_pop_rep_days)).setText(sb.toString());
+							
+							Log.d("cal", "updating cal! old:"+mYear+"-"+mMonth+"-"+mDay);
+							// update due date to be upcoming one
+							boolean [] megaDays = new boolean[14];
+							for(int i=0; i<7; i++) {
+								megaDays[i] = daysPicked[i];
+								megaDays[i+7] = daysPicked[i];
+							}
+							
+							Date wDate = new Date(mYear-1900, mMonth, mDay);
+							for(int i=wDate.getDay(); i<wDate.getDay()+7; i++) {
+								if(megaDays[i]==true) {
+									int daysAway = i-wDate.getDay();
+									// update calendar
+									wDate.setTime(wDate.getTime()+ 1000*60*60*24*daysAway);
+									mYear = wDate.getYear()+1900;
+									mMonth = wDate.getMonth();
+									mDay = wDate.getDate();
+									updateDisplay();
+									break;
+								}
+							}
+							
 						}
 					});
 					builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -503,8 +627,29 @@ public class TodoActivity extends Activity {
 					}
 					sb.append(")");
 					((TextView)todoView.findViewById(R.id.text_todo_pop_rep_days)).setText(sb.toString());
+				
+					boolean [] megaDays = new boolean[14];
+					for(int i=0; i<7; i++) {
+						megaDays[i] = daysPicked[i];
+						megaDays[i+7] = daysPicked[i];
+					}
+					
+					Date wDate = new Date(mYear-1900, mMonth, mDay);
+					for(int i=wDate.getDay(); i<wDate.getDay()+7; i++) {
+						if(megaDays[i]==true) {
+							int daysAway = i-wDate.getDay();
+							// update calendar
+							wDate.setTime(wDate.getTime()+ 1000*60*60*24*daysAway);
+							mYear = wDate.getYear()+1900;
+							mMonth = wDate.getMonth();
+							mDay = wDate.getDate();
+							updateDisplay();
+							break;
+						}
+					}
+				
 				}
-				else {
+				else if(arg2==0){
 					weekly = false;
 					((Button)todoView.findViewById(R.id.button_todo_pop_rep_days)).setVisibility(View.GONE);
 					((TextView)todoView.findViewById(R.id.text_todo_pop_rep_days)).setVisibility(View.GONE);
@@ -541,6 +686,7 @@ public class TodoActivity extends Activity {
 				builder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						((Button)todoView.findViewById(R.id.button_todo_pop_rep_days)).setVisibility(View.VISIBLE);
+						Log.d("worked", "textview is visible");
 						((TextView)todoView.findViewById(R.id.text_todo_pop_rep_days)).setVisibility(View.VISIBLE);
 						StringBuilder sb = new StringBuilder();
 						sb.append("( ");
@@ -551,6 +697,27 @@ public class TodoActivity extends Activity {
 						}
 						sb.append(")");
 						((TextView)todoView.findViewById(R.id.text_todo_pop_rep_days)).setText(sb.toString());
+					
+						// update due date to be upcoming one
+						boolean [] megaDays = new boolean[14];
+						for(int i=0; i<7; i++) {
+							megaDays[i] = daysPicked[i];
+							megaDays[i+7] = daysPicked[i];
+						}
+						
+						Date wDate = new Date(mYear-1900, mMonth, mDay);
+						for(int i=wDate.getDay(); i<wDate.getDay()+7; i++) {
+							if(megaDays[i]==true) {
+								int daysAway = i-wDate.getDay();
+								// update calendar
+								wDate.setTime(wDate.getTime()+ 1000*60*60*24*daysAway);
+								mYear = wDate.getYear()+1900;
+								mMonth = wDate.getMonth();
+								mDay = wDate.getDate();
+								updateDisplay();
+								break;
+							}
+						}
 					}
 				});
 				builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -576,7 +743,7 @@ public class TodoActivity extends Activity {
 				Log.d(getString(R.string.app_name),"done clicked");
 				Log.d(getString(R.string.app_name),"desc: "+desc);
 				
-				Date d = new Date(mYear, mMonth, mDay);
+				Date d = new Date(mYear-1900, mMonth, mDay);
 				RatingBar rb = ((RatingBar)todoView.findViewById(R.id.rating_todo_popup));
 				int priority = (int)rb.getRating();
 				boolean done = false;
@@ -662,12 +829,17 @@ public class TodoActivity extends Activity {
 	// updates the date in the TextView
 	private void updateDisplay() {
 		
-		Date d = new Date();
-		d.setYear(mYear);
-		d.setMonth(mMonth);
-		d.setDate(mDay);
+		//TODO: use GC instead?
+		Log.d("cal", mYear+", "+mMonth+", "+mDay);
+		GregorianCalendar gc = new GregorianCalendar(mYear, mMonth, mDay);
 		
-		String dStr = d.toString();
+		
+		Log.d("cal", "updatedisplay (fixed?): "+gc.get(GregorianCalendar.YEAR)+ 
+				"-"+gc.get(GregorianCalendar.MONTH)+"-"+gc.get(GregorianCalendar.DATE)+"--"
+				+gc.get(GregorianCalendar.DAY_OF_WEEK));
+		
+		
+		String dStr = gc.getTime().toString();
 		
 		String [] dArr = dStr.split(" ");
 		
@@ -711,6 +883,21 @@ public class TodoActivity extends Activity {
 		for(int i=0; i<7; i++) 
 			if(dowStr.equalsIgnoreCase(days[i])) return i;
 		return -1;
+	}
+	
+	public int getHashColor(String str) {
+		String hashStr = str.hashCode()+"";
+		
+		hashStr += hashStr + hashStr + hashStr + hashStr + hashStr;
+		
+		String red = hashStr.substring(1, 3);
+		String green = hashStr.substring(2, 4);
+		String blue = hashStr.substring(4, 6);
+		
+		String blueStr = "ff"+red+green+blue;
+		long n = Long.parseLong(blueStr, 16);
+		int nn = (int) n;
+		return nn;
 	}
 	
 }

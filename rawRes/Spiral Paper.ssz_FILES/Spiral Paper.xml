@@ -1,0 +1,448 @@
+<?xml version="1.0" ?>
+<NoteSkin SchemaVersion="5.0" SkinVersion="1.0" Style="Classic" UniqueName="Spiral Paper" DisplayName="Spiral Paper" 
+TransparentColor="#FFFFFF" ColorOverridable="False">
+
+	<ProgramCompatibility MajorVersion="5" MinorVersion="0" Build="34" />
+	
+	<About Author="Conceptworld Corporation" Company="Conceptworld Corporation" Website="www.conceptworld.com"
+	Email="support@conceptworld.com" Comments="Spiral Bound Paper" DateCreated="20 July 2007" />
+		
+	<Files>
+		<File ID="1" Type="Image" Name="SpiralPaper_Title.bmp" />
+		<File ID="2" Type="Image" Name="SpiralPaper_NoteMenuButton.bmp" />
+		<File ID="3" Type="Image" Name="SpiralPaper_SetAlarmFlagButton.bmp" />
+		<File ID="4" Type="Image" Name="SpiralPaper_RollUpButton.bmp" />
+		<File ID="5" Type="Image" Name="SpiralPaper_RollDownButton.bmp" />
+		<File ID="6" Type="Image" Name="SpiralPaper_TrashNoteButton.bmp" />
+		<File ID="7" Type="Image" Name="SpiralPaper_VSBBackground.bmp" />
+		<File ID="8" Type="Image" Name="SpiralPaper_VSBScrollTopButton.bmp" />
+		<File ID="9" Type="Image" Name="SpiralPaper_VSBScrollBottomButton.bmp" />
+		<File ID="10" Type="Image" Name="SpiralPaper_VSBThumbButton.bmp" />
+		<File ID="11" Type="Image" Name="SpiralPaper_ResizeButton.bmp" />
+		<File ID="12" Type="Image" Name="SpiralPaper_EditBackground.bmp" />
+		<File ID="13" Type="Image" Name="SpiralPaper_LeftBorder.bmp" />
+		<File ID="14" Type="Image" Name="SpiralPaper_RightBorder.bmp" />
+		<File ID="15" Type="Image" Name="SpiralPaper_BottomBorder.bmp" />
+	</Files>
+	
+	<Placements>
+		<Placement Name="NoteBorderRolledUp" PlacementRect="0,0,143,16"/>
+		<Placement Name="TitlebarRolledUp" PlacementRect="0,0,143,16"/>
+		<Placement Name="TitlebarRolledDown" PlacementRect="0,0,143,16"/>
+		<Placement Name="ResizeButton" PlacementRect="136,136,143,143"/>
+	</Placements>
+	
+	<NoteBorder OuterRect="0,0,143,143" InnerRect="21,17,141,141" BackgroundColor="#F0EAEA" ColorOverridable="True">
+		<Surfaces>
+			<Surface Name="LeftBorderRolledDown" SurfaceType="Bitmap" BackgroundColor="#F0EAEA" ColorOverridable="True">
+				<Bitmap>
+					<BitmapProperties FileID="13" BitmapRect="0,0,20,103" NonRectangular="False" TransparentColor="#FFFFFF" />
+					<BitmapPlacement HorizontalAlignment="Left" VerticalAlignment="Top" Layout="Tile" />
+				</Bitmap>
+			</Surface>
+			
+			<Surface Name="TopBorderRolledDown" SurfaceType="Plain" BackgroundColor="#F0EAEA" ColorOverridable="True">
+			</Surface>
+			
+			<Surface Name="RightBorderRolledDown" SurfaceType="Bitmap" BackgroundColor="#F0EAEA" ColorOverridable="True">
+				<Bitmap>
+					<BitmapProperties FileID="14" BitmapRect="0,0,1,103" NonRectangular="False" TransparentColor="#FFFFFF" />
+					<BitmapPlacement HorizontalAlignment="Left" VerticalAlignment="Top" Layout="Tile" />
+				</Bitmap>
+				
+			</Surface>
+
+			<Surface Name="BottomBorderRolledDown" SurfaceType="Plain" BackgroundColor="#F0EAEA" ColorOverridable="True">
+			</Surface>
+						
+
+			<Surface Name="RolledUp" SurfaceType="Plain" BackgroundColor="#F0EAEA" ColorOverridable="True">
+			</Surface>
+		</Surfaces>
+				
+		
+		<Titlebar Resize="True" Margins="1,1,1,1" MoveWhenNoteResizedX="False" MoveWhenNoteResizedY="False">
+		
+			<TitleFont FontName="Verdana" FontSize="10" Bold="False" ActiveColor="#000000" InactiveColor="#000000" />
+			
+			<Surface SurfaceType="Bitmap" BackgroundColor="#F0EAEA">
+				<Bitmap>
+					<BitmapProperties FileID="1" BitmapRect="0,0,143,16" ResizeBitmapRect="17,0,143,16" NonRectangular="False" TransparentColor="#FFFFFF" />
+					<BitmapPlacement HorizontalAlignment="Center" VerticalAlignment="Center" Layout="None" />
+				</Bitmap>
+			</Surface>
+
+			<Buttons>
+				<Button Name="NoteMenu" Type="Press" Size="16,16">
+					<SurfaceGroup Name="Press">
+						<State State="Normal">
+							<Surface SurfaceType="Bitmap" BackgroundColor="#F0EAEA">
+								<Bitmap>
+									<BitmapProperties FileID="2" BitmapRect="0,0,15,15" NonRectangular="True" TransparentColor="#FFFEFF" />
+									<BitmapPlacement HorizontalAlignment="Center" VerticalAlignment="Center" Layout="None"  />
+								</Bitmap>
+							</Surface>
+						</State>
+						<State State="Focused">
+							<Surface SurfaceType="Bitmap" BackgroundColor="#F0EAEA">
+								<Bitmap>
+									<BitmapProperties FileID="2" BitmapRect="16,0,31,15" NonRectangular="True" TransparentColor="#FFFEFF" />
+									<BitmapPlacement HorizontalAlignment="Center" VerticalAlignment="Center" Layout="None"  />
+								</Bitmap>
+							</Surface>
+						</State>
+						<State State="Selected">
+							<Surface SurfaceType="Bitmap" BackgroundColor="#F0EAEA">
+								<Bitmap>
+									<BitmapProperties FileID="2" BitmapRect="32,0,47,15" NonRectangular="True" TransparentColor="#FFFEFF" />
+									<BitmapPlacement HorizontalAlignment="Center" VerticalAlignment="Center" Layout="None" />
+								</Bitmap>
+							</Surface>
+						</State>
+						<State State="Disabled">
+							<Surface SurfaceType="Bitmap" BackgroundColor="#F0EAEA">
+								<Bitmap>
+									<BitmapProperties FileID="2" BitmapRect="48,0,63,15" NonRectangular="True" TransparentColor="#FFFEFF" />
+									<BitmapPlacement HorizontalAlignment="Center" VerticalAlignment="Center" Layout="None"  />
+								</Bitmap>
+								<Gradient Direction="Vertical" BeginColor="#AA00FF" EndColor="#FFFF86" />
+							</Surface>
+						</State>
+					</SurfaceGroup>
+				</Button>
+				
+				<Button Name="RollUpDown" Type="Toggle" Size="16,16">
+					<SurfaceGroup Name="ToggleUp">
+						<State State="Normal">
+							<Surface SurfaceType="Bitmap" BackgroundColor="#F0EAEA">
+								<Bitmap>
+									<BitmapProperties FileID="5" BitmapRect="0,0,15,15" NonRectangular="True" TransparentColor="#FFFEFF" />
+									<BitmapPlacement HorizontalAlignment="Center" VerticalAlignment="Center" Layout="None"  />
+								</Bitmap>
+								<Gradient Direction="Vertical" BeginColor="#F0EAEA" EndColor="#FFFF86" />
+							</Surface>
+						</State>
+						<State State="Focused">
+							<Surface SurfaceType="Bitmap" BackgroundColor="#F0EAEA">
+								<Bitmap>
+									<BitmapProperties FileID="5" BitmapRect="16,0,31,15" NonRectangular="True" TransparentColor="#FFFEFF" />
+									<BitmapPlacement HorizontalAlignment="Center" VerticalAlignment="Center" Layout="None"  />
+								</Bitmap>
+							</Surface>
+						</State>
+						<State State="Selected">
+							<Surface SurfaceType="Bitmap" BackgroundColor="#F0EAEA">
+								<Bitmap>
+									<BitmapProperties FileID="5" BitmapRect="32,0,47,15" NonRectangular="True" TransparentColor="#FFFEFF" />
+									<BitmapPlacement HorizontalAlignment="Center" VerticalAlignment="Center" Layout="None"  />
+								</Bitmap>
+							</Surface>
+						</State>
+						<State State="Disabled">
+							<Surface SurfaceType="Bitmap" BackgroundColor="#F0EAEA">
+								<Bitmap>
+									<BitmapProperties FileID="5" BitmapRect="48,0,63,15" NonRectangular="True" TransparentColor="#FFFEFF" />
+									<BitmapPlacement HorizontalAlignment="Center" VerticalAlignment="Center" Layout="None"  />
+								</Bitmap>
+							</Surface>
+						</State>
+					</SurfaceGroup>
+					
+					<SurfaceGroup Name="ToggleDown">
+						<State State="Normal">
+							<Surface SurfaceType="Bitmap" BackgroundColor="#F0EAEA">
+								<Bitmap>
+									<BitmapProperties FileID="4" BitmapRect="0,0,15,15" NonRectangular="True" TransparentColor="#FFFEFF" />
+									<BitmapPlacement HorizontalAlignment="Center" VerticalAlignment="Center" Layout="None"  />
+								</Bitmap>
+								<Gradient Direction="Vertical" BeginColor="#AA00FF" EndColor="#FFFF86" />
+							</Surface>
+						</State>
+						<State State="Focused">
+							<Surface SurfaceType="Bitmap" BackgroundColor="#F0EAEA">
+								<Bitmap>
+									<BitmapProperties FileID="4" BitmapRect="16,0,31,15" NonRectangular="True" TransparentColor="#FFFEFF" />
+									<BitmapPlacement HorizontalAlignment="Center" VerticalAlignment="Center" Layout="None"  />
+								</Bitmap>
+							</Surface>
+						</State>
+						<State State="Selected">
+							<Surface SurfaceType="Bitmap" BackgroundColor="#F0EAEA">
+								<Bitmap>
+									<BitmapProperties FileID="4" BitmapRect="32,0,47,15" NonRectangular="True" TransparentColor="#FFFEFF" />
+									<BitmapPlacement HorizontalAlignment="Center" VerticalAlignment="Center" Layout="None" />
+								</Bitmap>
+							</Surface>
+						</State>
+						<State State="Disabled">
+							<Surface SurfaceType="Bitmap" BackgroundColor="#F0EAEA">
+								<Bitmap>
+									<BitmapProperties FileID="4" BitmapRect="48,0,63,15" NonRectangular="True" TransparentColor="#FFFEFF" />
+									<BitmapPlacement HorizontalAlignment="Center" VerticalAlignment="Center" Layout="None"  />
+								</Bitmap>
+							</Surface>
+						</State>
+					</SurfaceGroup>
+					
+				</Button>
+				<Button Name="TrashNote" Type="Press" Size="16,16">
+					<SurfaceGroup Name="Press">
+						<State State="Normal">
+							<Surface SurfaceType="Bitmap" BackgroundColor="#F0EAEA">
+								<Bitmap>
+									<BitmapProperties FileID="6" BitmapRect="0,0,15,15" NonRectangular="True" TransparentColor="#FFFEFF" />
+									<BitmapPlacement HorizontalAlignment="Center" VerticalAlignment="Center" Layout="None" />
+								</Bitmap>
+							</Surface>
+						</State>
+						<State State="Focused">
+							<Surface SurfaceType="Bitmap" BackgroundColor="#F0EAEA">
+								<Bitmap>
+									<BitmapProperties FileID="6" BitmapRect="16,0,31,15" NonRectangular="True" TransparentColor="#FFFEFF" />
+									<BitmapPlacement HorizontalAlignment="Center" VerticalAlignment="Center" Layout="None" />
+								</Bitmap>
+							</Surface>
+						</State>
+						<State State="Selected">
+							<Surface SurfaceType="Bitmap" BackgroundColor="#F0EAEA">
+								<Bitmap>
+									<BitmapProperties FileID="6" BitmapRect="32,0,47,15" NonRectangular="True" TransparentColor="#FFFEFF" />
+									<BitmapPlacement HorizontalAlignment="Center" VerticalAlignment="Center" Layout="None"  />
+								</Bitmap>
+							</Surface>
+						</State>
+						<State State="Disabled">
+							<Surface SurfaceType="Bitmap" BackgroundColor="#F0EAEA">
+								<Bitmap>
+									<BitmapProperties FileID="6" BitmapRect="48,0,63,15" NonRectangular="True" TransparentColor="#FFFEFF" />
+									<BitmapPlacement HorizontalAlignment="Center" VerticalAlignment="Center" Layout="None"  />
+								</Bitmap>
+							</Surface>
+						</State>
+					</SurfaceGroup>
+				</Button>
+				
+				<Button Name="SetAlarmFlag" Type="Press" Size="16,16">
+					<SurfaceGroup Name="Press">
+						<State State="Normal">
+							<Surface SurfaceType="Bitmap" BackgroundColor="#F0EAEA">
+								<Bitmap>
+									<BitmapProperties FileID="3" BitmapRect="0,0,15,15" NonRectangular="True" TransparentColor="#FFFEFF" />
+									<BitmapPlacement HorizontalAlignment="Center" VerticalAlignment="Center" Layout="None"  />
+								</Bitmap>
+								<Gradient Direction="Vertical" BeginColor="#AA00FF" EndColor="#FFFF86" />
+							</Surface>
+						</State>
+						<State State="Focused">
+							<Surface SurfaceType="Bitmap" BackgroundColor="#F0EAEA">
+								<Bitmap>
+									<BitmapProperties FileID="3" BitmapRect="16,0,31,15" NonRectangular="True" TransparentColor="#FFFEFF" />
+									<BitmapPlacement HorizontalAlignment="Center" VerticalAlignment="Center" Layout="None"  />
+								</Bitmap>
+								<Gradient Direction="Vertical" BeginColor="#AA00FF" EndColor="#FFFF86" />
+							</Surface>
+						</State>
+						<State State="Selected">
+							<Surface SurfaceType="Bitmap" BackgroundColor="#F0EAEA">
+								<Bitmap>
+									<BitmapProperties FileID="3" BitmapRect="32,0,47,15" NonRectangular="True" TransparentColor="#FFFEFF" />
+									<BitmapPlacement HorizontalAlignment="Center" VerticalAlignment="Center" Layout="None"  />
+								</Bitmap>
+								<Gradient Direction="Vertical" BeginColor="#AA00FF" EndColor="#FFFF86" />
+							</Surface>
+						</State>
+						<State State="Disabled">
+							<Surface SurfaceType="Bitmap" BackgroundColor="#F0EAEA">
+								<Bitmap>
+									<BitmapProperties FileID="3" BitmapRect="48,0,63,15" NonRectangular="True" TransparentColor="#FFFEFF" />
+									<BitmapPlacement HorizontalAlignment="Center" VerticalAlignment="Center" Layout="None"  />
+								</Bitmap>
+								<Gradient Direction="Vertical" BeginColor="#AA00FF" EndColor="#FFFF86" />
+							</Surface>
+						</State>
+					</SurfaceGroup>
+				</Button>
+				
+			</Buttons>
+
+
+		</Titlebar>
+		
+		<ResizeButton MoveWhenNoteResizedX="True" MoveWhenNoteResizedY="True">
+			<Button Name="ResizeButton" Type="Press" Size="8,8">
+				<SurfaceGroup Name="Press">
+					<State State="Normal">
+						<Surface SurfaceType="Bitmap" BackgroundColor="#F0EAEA">
+							<Bitmap>
+								<BitmapProperties FileID="11" BitmapRect="0,0,7,7" NonRectangular="True" TransparentColor="#FFFFFF" />
+								<BitmapPlacement HorizontalAlignment="Center" VerticalAlignment="Center" Layout="None"  />
+							</Bitmap>
+						</Surface>
+					</State>
+					<State State="Focused">
+						<Surface SurfaceType="Bitmap" BackgroundColor="#F0EAEA">
+							<Bitmap>
+								<BitmapProperties FileID="11" BitmapRect="0,0,7,7" NonRectangular="True" TransparentColor="#FFFFFF" />
+								<BitmapPlacement HorizontalAlignment="Center" VerticalAlignment="Center" Layout="None" />
+							</Bitmap>
+						</Surface>
+					</State>
+					<State State="Selected">
+						<Surface SurfaceType="Bitmap" BackgroundColor="#F0EAEA">
+							<Bitmap>
+								<BitmapProperties FileID="11" BitmapRect="0,0,7,7" NonRectangular="True" TransparentColor="#FFFFFF" />
+								<BitmapPlacement HorizontalAlignment="Center" VerticalAlignment="Center" Layout="None" />
+							</Bitmap>
+						</Surface>
+					</State>
+					<State State="Disabled">
+						<Surface SurfaceType="Bitmap" BackgroundColor="#F0EAEA">
+							<Bitmap>
+								<BitmapProperties FileID="11" BitmapRect="0,0,7,7" NonRectangular="True" TransparentColor="#FFFFFF" />
+								<BitmapPlacement HorizontalAlignment="Center" VerticalAlignment="Center" Layout="None" />
+							</Bitmap>
+						</Surface>
+					</State>
+				</SurfaceGroup>
+			</Button>
+			
+		</ResizeButton>
+		
+		<Scrollbars>
+		
+			<Scrollbar Direction="Vertical" Resize="True" ShaftPosition="BetweenScrollArrows" Size="18,4">
+				<Surface SurfaceType="Bitmap" BackgroundColor="#FFFFFF" ColorOverridable="True">
+					<Bitmap>
+						<BitmapProperties FileID="7" BitmapRect="0,0,17,3" ResizeBitmapRect="0,1,17,2" NonRectangular="True" TransparentColor="#FFFFFE" />
+						<BitmapPlacement HorizontalAlignment="Center" VerticalAlignment="Center" Layout="None" />
+					</Bitmap>
+				</Surface>
+				<Buttons>
+					<Button Name="TopArrow" Type="Press" Size="16,10">
+						<SurfaceGroup Name="Press">
+							<State State="Normal">
+								<Surface SurfaceType="Bitmap" BackgroundColor="#FFFFFF">
+									<Bitmap>
+										<BitmapProperties FileID="8" BitmapRect="0,0,15,9" NonRectangular="True" TransparentColor="#FFFFFF" />
+										<BitmapPlacement HorizontalAlignment="Center" VerticalAlignment="Center" Layout="None" />
+									</Bitmap>
+								</Surface>
+							</State>
+							<State State="Focused">
+								<Surface SurfaceType="Bitmap" BackgroundColor="#FFFFFF">
+									<Bitmap>
+										<BitmapProperties FileID="8" BitmapRect="16,0,31,9" NonRectangular="True" TransparentColor="#FFFFFF" />
+										<BitmapPlacement HorizontalAlignment="Center" VerticalAlignment="Center" Layout="None" />
+									</Bitmap>
+								</Surface>
+							</State>
+							<State State="Selected">
+								<Surface SurfaceType="Bitmap" BackgroundColor="#FFFFFF">
+									<Bitmap>
+										<BitmapProperties FileID="8" BitmapRect="32,0,47,9" NonRectangular="True" TransparentColor="#FFFFFF" />
+										<BitmapPlacement HorizontalAlignment="Center" VerticalAlignment="Center" Layout="None" />
+									</Bitmap>
+								</Surface>
+							</State>
+							<State State="Disabled">
+								<Surface SurfaceType="Bitmap" BackgroundColor="#FFFFFF">
+									<Bitmap>
+										<BitmapProperties FileID="8" BitmapRect="48,0,63,9" NonRectangular="True" TransparentColor="#FFFFFF" />
+										<BitmapPlacement HorizontalAlignment="Center" VerticalAlignment="Center" Layout="None" />
+									</Bitmap>
+								</Surface>
+							</State>
+						</SurfaceGroup>
+					</Button>
+					<Button Name="BottomArrow" Type="Press" Size="16,10">
+						<SurfaceGroup Name="Press">
+							<State State="Normal">
+								<Surface SurfaceType="Bitmap" BackgroundColor="#FFFFFF">
+									<Bitmap>
+										<BitmapProperties FileID="9" BitmapRect="0,0,15,9" NonRectangular="True" TransparentColor="#FFFFFF" />
+										<BitmapPlacement HorizontalAlignment="Center" VerticalAlignment="Center" Layout="None" />
+									</Bitmap>
+									<Gradient Direction="Vertical" BeginColor="#AA00FF" EndColor="#FFFF86" />
+								</Surface>
+							</State>
+							<State State="Focused">
+								<Surface SurfaceType="Bitmap" BackgroundColor="#FFFFFF">
+									<Bitmap>
+										<BitmapProperties FileID="9" BitmapRect="16,0,31,9" NonRectangular="True" TransparentColor="#FFFFFF" />
+										<BitmapPlacement HorizontalAlignment="Center" VerticalAlignment="Center" Layout="None" />
+									</Bitmap>
+								</Surface>
+							</State>
+							<State State="Selected">
+								<Surface SurfaceType="Bitmap" BackgroundColor="#FFFFFF">
+									<Bitmap>
+										<BitmapProperties FileID="9" BitmapRect="32,0,47,9" NonRectangular="True" TransparentColor="#FFFFFF" />
+										<BitmapPlacement HorizontalAlignment="Center" VerticalAlignment="Center" Layout="None" />
+									</Bitmap>
+								</Surface>
+							</State>
+							<State State="Disabled">
+								<Surface SurfaceType="Bitmap" BackgroundColor="#FFFFFF">
+									<Bitmap>
+										<BitmapProperties FileID="9" BitmapRect="48,0,63,9" NonRectangular="True" TransparentColor="#FFFFFF" />
+										<BitmapPlacement HorizontalAlignment="Center" VerticalAlignment="Center" Layout="None" />
+									</Bitmap>
+								</Surface>
+							</State>
+						</SurfaceGroup>
+					</Button>		
+					<Button Name="Thumb" Type="Press" Size="16,20">
+						<SurfaceGroup Name="Press">
+							<State State="Normal">
+								<Surface SurfaceType="Bitmap" BackgroundColor="#FFFFFF">
+									<Bitmap>
+										<BitmapProperties FileID="10" BitmapRect="0,0,15,19" ResizeBitmapRect="0,9,15,10"  NonRectangular="False" TransparentColor="#FF00FF" />
+										<BitmapPlacement HorizontalAlignment="Center" VerticalAlignment="Center" Layout="None" />
+									</Bitmap>
+								</Surface>
+							</State>
+							<State State="Focused">
+								<Surface SurfaceType="Bitmap" BackgroundColor="#FFFFFF">
+									<Bitmap>
+										<BitmapProperties FileID="10" BitmapRect="16,0,31,19" ResizeBitmapRect="0,9,15,10"  NonRectangular="False" TransparentColor="#FF00FF" />
+										<BitmapPlacement HorizontalAlignment="Center" VerticalAlignment="Center" Layout="None" />
+									</Bitmap>
+								</Surface>
+							</State>
+							<State State="Selected">
+								<Surface SurfaceType="Bitmap" BackgroundColor="#FFFFFF">
+									<Bitmap>
+										<BitmapProperties FileID="10" BitmapRect="32,0,47,19" ResizeBitmapRect="0,9,15,10" NonRectangular="False" TransparentColor="#FF00FF" />
+										<BitmapPlacement HorizontalAlignment="Center" VerticalAlignment="Center" Layout="None" />
+									</Bitmap>
+								</Surface>
+							</State>
+							<State State="Disabled">
+								<Surface SurfaceType="Bitmap" BackgroundColor="#FFFFFF">
+									<Bitmap>
+										<BitmapProperties FileID="10" BitmapRect="48,0,63,19" ResizeBitmapRect="0,9,15,10" NonRectangular="False" TransparentColor="#FF00FF" />
+										<BitmapPlacement HorizontalAlignment="Center" VerticalAlignment="Center" Layout="None" />
+									</Bitmap>
+								</Surface>
+							</State>
+						</SurfaceGroup>
+					</Button>
+				</Buttons>
+			</Scrollbar>
+		</Scrollbars>
+	</NoteBorder>
+	<EditWindow>
+		<EditWindowBackground BackgroundColor="#F0EAEA" ColorOverridable="False">
+			<SurfaceTable Rows="1" Columns="1">
+				<SurfaceCell Row="1" Column="1" Height="100%" Width="100%">
+					<Surface SurfaceType="Bitmap" BackgroundColor="#F0EAEA" ColorOverridable="False" >
+						<Bitmap>
+							<BitmapProperties FileID="12" BitmapRect="0,0,119,103" NonRectangular="False" TransparentColor="#FFFFFF" />
+							<BitmapPlacement HorizontalAlignment="Left" VerticalAlignment="Top" Layout="Tile" />
+						</Bitmap>
+					</Surface>
+				</SurfaceCell>
+			</SurfaceTable>
+		</EditWindowBackground>
+	</EditWindow>
+</NoteSkin>

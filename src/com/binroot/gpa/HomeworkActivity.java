@@ -148,28 +148,14 @@ public class HomeworkActivity extends Activity {
 			((TextView) v.findViewById(R.id.text_hw_grid_class)).setText(title);
 			RelativeLayout rl = (RelativeLayout)v.findViewById(R.id.relative_grid_class);
 			
-			String hashStr = title.hashCode()+"";
-			int hashInt = title.hashCode();
-			
-			//Log.d(getString(R.string.app_name),"hash str: "+(title.hashCode()+""));
-			//String color = (title.hashCode()+"").substring(0,4);
-			
-			hashStr += hashStr + hashStr + hashStr + hashStr + hashStr;
-			
-			String red = hashStr.substring(1, 3);
-			String green = hashStr.substring(2, 4);
-			String blue = hashStr.substring(4, 6);
-			
-			String blueStr = "ff"+red+green+blue;
-			long n = Long.parseLong(blueStr, 16);
-			int nn = (int) n;
+			int randCol = getHashColor(title);
 			
 			//int col = -1*Integer.parseInt(color, 16);
 			
 			
 			Log.d(getString(R.string.app_name),"color: ");
 			
-			rl.setBackgroundColor(nn);
+			rl.setBackgroundColor(randCol);
 		
 			
 			return v;
@@ -184,6 +170,21 @@ public class HomeworkActivity extends Activity {
 			startActivity(i);
 		}
 
+	}
+	
+	public int getHashColor(String str) {
+		String hashStr = str.hashCode()+"";
+		
+		hashStr += hashStr + hashStr + hashStr + hashStr + hashStr;
+		
+		String red = hashStr.substring(1, 3);
+		String green = hashStr.substring(2, 4);
+		String blue = hashStr.substring(4, 6);
+		
+		String blueStr = "ff"+red+green+blue;
+		long n = Long.parseLong(blueStr, 16);
+		int nn = (int) n;
+		return nn;
 	}
 	
 	public void logoClicked(View v) {

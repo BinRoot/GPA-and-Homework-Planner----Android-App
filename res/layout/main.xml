@@ -2,7 +2,8 @@
 <RelativeLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
-	android:layout_height="fill_parent">
+	android:layout_height="fill_parent"
+	android:background="@drawable/yellowpad">
 
 	<RelativeLayout
 		android:id="@+id/relative_main_top"
@@ -31,12 +32,28 @@
 				android:layout_width="fill_parent"
 				android:layout_height="200dip"
 				android:text="Homework"
+				android:textSize="24sp"
+				android:shadowColor="#000000"
+				android:shadowDx="0"
+				android:shadowDy="-5"
+				android:shadowRadius="10"
+				android:textColor="#FFFFFF"
+				android:textStyle="bold"
+				android:background="@drawable/books"
 				android:layout_weight="1" />
 			<Button
 				android:id="@+id/button_main_transcript"
 				android:layout_width="fill_parent"
 				android:layout_height="200dip"
+				android:textSize="24sp"
+				android:shadowColor="#000000"
+				android:shadowDx="0"
+				android:shadowDy="-5"
+				android:shadowRadius="10"
+				android:textColor="#FFFFFF"
+				android:textStyle="bold"
 				android:text="Grades"
+				android:background="@drawable/folder_full"
 				android:layout_weight="1" />
 		</LinearLayout>
 
@@ -46,21 +63,52 @@
 		android:id="@+id/slidingDrawer"
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
-		android:handle="@+id/handle"
+		android:handle="@+id/relative_handle"
 		android:content="@+id/list_main_hw"
 		android:orientation="vertical"
 		android:layout_alignParentBottom="true">
-		<Button
+		<RelativeLayout 
 			android:layout_width="fill_parent"
 			android:layout_height="80dip"
-			android:text="Due Soon (0)"
-			android:id="@+id/handle"></Button>
-		
-			<ListView 
-				android:id="@+id/list_main_hw"
+			android:id="@+id/relative_handle">
+			<Button
 				android:layout_width="fill_parent"
-				android:layout_height="wrap_content">
-			</ListView>
+				android:layout_height="80dip"
+				android:text="Due Soon"
+				android:paddingBottom="5dip"
+				android:textSize="16sp"
+				android:shadowColor="#000000"
+				android:shadowDx="0"
+				android:shadowDy="5"
+				android:shadowRadius="10"
+				android:textColor="#FFFFFF"
+				android:textStyle="bold"
+				android:background="@drawable/photo"
+				android:id="@+id/handle"> </Button>
+			<TextView 
+				android:id="@+id/text_main_due_drawer"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="0"
+				android:gravity="center"
+				android:paddingBottom="5dip"
+				android:textSize="24sp"
+				android:shadowColor="#000000"
+				android:shadowDx="0"
+				android:shadowDy="5"
+				android:shadowRadius="10"
+				android:textColor="#FFFFFF"
+				android:textStyle="bold"
+				android:layout_alignParentRight="true"
+				android:layout_marginRight="10dip"
+				android:background="@drawable/comment"/>
+		</RelativeLayout>
+		
+		<ListView 
+			android:id="@+id/list_main_hw"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content">
+		</ListView>
 		
 	</SlidingDrawer>
 

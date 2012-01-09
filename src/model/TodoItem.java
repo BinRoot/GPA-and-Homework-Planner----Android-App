@@ -22,6 +22,16 @@ public class TodoItem {
 		this.classTitle = classTitle;
 	}
 
+	public TodoItem( TodoItem ti ) {
+		this.desc = ti.getDesc();
+		this.due = ti.getDue();
+		this.priority = ti.getPriority();
+		this.days = ti.getDays();
+		this.weekly = ti.getWeekly();
+		this.setDone(ti.getDone());
+		this.classTitle = ti.getClassTitle();
+	}
+	
 	public String getDesc() {
 		return desc;
 	}

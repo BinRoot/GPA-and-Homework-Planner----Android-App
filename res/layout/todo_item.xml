@@ -13,7 +13,32 @@
 			android:id="@+id/relative_todo_priority"
 			android:layout_width="20dip"
 			android:layout_height="fill_parent">
-			
+			<ImageView 
+				android:id="@+id/image_star2"
+				android:layout_width="20dip"
+				android:layout_height="20dip"
+				android:background="@drawable/star_full"
+				android:layout_centerInParent="true"
+				android:visibility="gone">
+			</ImageView>
+			<ImageView 
+				android:id="@+id/image_star1"
+				android:layout_above="@+id/image_star2"
+				android:layout_width="20dip"
+				android:layout_height="20dip"
+				android:layout_marginBottom="2dip"
+				android:background="@drawable/star_full"
+				android:visibility="gone">
+			</ImageView>
+			<ImageView 
+				android:id="@+id/image_star3"
+				android:layout_below="@+id/image_star2"
+				android:layout_width="20dip"
+				android:layout_height="20dip"
+				android:layout_marginTop="2dip"
+				android:background="@drawable/star_full"
+				android:visibility="gone">
+			</ImageView>
 		</RelativeLayout>
 		<RelativeLayout 
 			android:id="@+id/relative_todo_nonpriority"
@@ -44,17 +69,27 @@
 				
 				<RelativeLayout 
 					android:id="@+id/relative_todo_check"
-					android:layout_width="wrap_content"
+					android:layout_width="120dip"
 					android:layout_height="wrap_content"
 					android:layout_alignParentRight="true">
+					
+					<Button 
+						android:id="@+id/button_check_delete"
+						android:layout_width="60dip"
+						android:layout_height="55dip"
+						android:layout_alignTop="@+id/button_check_todo"
+						android:background="@drawable/trash_can"
+						android:layout_toLeftOf="@+id/button_check_todo"/>
+					
 					<Button 
 						android:id="@+id/button_check_todo"
-						android:layout_width="40dip"
-						android:layout_height="35dip"
+						android:layout_width="60dip"
+						android:layout_height="55dip"
+						android:layout_alignParentRight="true"
 						android:layout_marginRight="10dip"
 						android:layout_marginTop="10dip"
 						android:focusable="false"
-						android:background="@drawable/check"/>
+						android:background="@drawable/bullet_accept_off"/>
 				</RelativeLayout>
 			</RelativeLayout>
 			
@@ -89,43 +124,43 @@
 						android:id="@+id/image_todo_item_day1"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
-						android:background="@drawable/letter_a"
+						android:background="@drawable/day_su"
 						android:layout_weight="1"/>
 					<ImageView 
 						android:id="@+id/image_todo_item_day2"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
-						android:background="@drawable/letter_b"
+						android:background="@drawable/day_mo"
 						android:layout_weight="1"/>
 					<ImageView 
 						android:id="@+id/image_todo_item_day3"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
-						android:background="@drawable/letter_c"
+						android:background="@drawable/day_tu"
 						android:layout_weight="1"/>
 					<ImageView 
-						android:id="@+id/image_todo_item_day3"
+						android:id="@+id/image_todo_item_day4"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
-						android:background="@drawable/letter_d"
+						android:background="@drawable/day_we"
 						android:layout_weight="1"/>
 					<ImageView 
-						android:id="@+id/image_todo_item_day3"
+						android:id="@+id/image_todo_item_day5"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
-						android:background="@drawable/letter_f"
+						android:background="@drawable/day_th"
 						android:layout_weight="1"/>
 					<ImageView 
-						android:id="@+id/image_todo_item_day3"
+						android:id="@+id/image_todo_item_day6"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
-						android:background="@drawable/letter_am"
+						android:background="@drawable/day_fr"
 						android:layout_weight="1"/>
 					<ImageView 
-						android:id="@+id/image_todo_item_day3"
+						android:id="@+id/image_todo_item_day7"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
-						android:background="@drawable/letter_ap"
+						android:background="@drawable/day_sa"
 						android:layout_weight="1"/>
 				</LinearLayout>
 				

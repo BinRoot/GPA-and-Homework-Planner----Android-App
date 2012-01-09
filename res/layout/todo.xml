@@ -18,14 +18,13 @@
 			android:text="&lt; LOGO" />
 		<Button
 			android:id="@+id/button_todo_add"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
+			android:layout_width="50dip"
+			android:layout_height="50dip"
 			android:layout_centerVertical="true"
 			android:layout_alignParentRight="true"
-			android:background="@android:drawable/ic_menu_add"
+			android:background="@drawable/bullet_add"
 			android:textAppearance="@android:style/TextAppearance.Large"
-			android:onClick="addClicked"
-			android:text=" + " />
+			android:onClick="addClicked"/>
 	</RelativeLayout>
 
 	<RelativeLayout 
@@ -34,19 +33,21 @@
 		android:layout_height="50dip"
 		android:layout_below="@id/relative_todo_top">
 		<TextView 
-			android:id="@+id/text_todo_hw"
+			android:id="@+id/text_todo_title"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:text="Homework"
 			android:textAppearance="@android:style/TextAppearance.Large"
 			android:layout_centerHorizontal="true"/>
+			
 		<TextView 
-			android:id="@+id/text_todo_title"
-			android:layout_below="@id/text_todo_hw"
+			android:id="@+id/text_todo_hw"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
+			android:layout_below="@+id/text_todo_title"
 			android:text="Homework"
 			android:layout_centerHorizontal="true"/>
+		
 	</RelativeLayout>
 
 	<ListView 

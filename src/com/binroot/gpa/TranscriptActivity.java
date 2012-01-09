@@ -307,14 +307,14 @@ public class TranscriptActivity extends Activity {
 				}
 				
 				if(getItem(position).getSelectMode()==true) {
-					((Button)v.findViewById(R.id.button_edit_classTitle)).setBackgroundDrawable(getResources().getDrawable(android.R.drawable.ic_menu_edit));
+					((Button)v.findViewById(R.id.button_edit_classTitle)).setBackgroundDrawable(getResources().getDrawable(R.drawable.edit));
 					((Button)v.findViewById(R.id.button_edit_classTitle)).setVisibility(View.VISIBLE);
 					((TextView)v.findViewById(R.id.text_transcript_classTitle)).setVisibility(View.VISIBLE);
 					((EditText)v.findViewById(R.id.edit_editclass_title)).setVisibility(View.GONE);
 				}
 				else if(getItem(position).getEditMode()==true) {
 					((Button)v.findViewById(R.id.button_edit_classTitle)).setVisibility(View.VISIBLE);
-					((Button)v.findViewById(R.id.button_edit_classTitle)).setBackgroundDrawable(getResources().getDrawable(android.R.drawable.ic_menu_add));
+					((Button)v.findViewById(R.id.button_edit_classTitle)).setBackgroundDrawable(getResources().getDrawable(R.drawable.bullet_add));
 					((TextView)v.findViewById(R.id.text_transcript_classTitle)).setVisibility(View.GONE);
 					
 					EditText et = ((EditText)v.findViewById(R.id.edit_editclass_title));
@@ -540,7 +540,7 @@ public class TranscriptActivity extends Activity {
 	
 	public void classTitledClicked(View v) {
 		Log.d(getString(R.string.app_name), "text clicked");
-		Toast.makeText(TranscriptActivity.this, "Clicked", Toast.LENGTH_LONG).show();
+		//Toast.makeText(TranscriptActivity.this, "Clicked", Toast.LENGTH_LONG).show();
 		
 		TextView tv = (TextView)v;
 		String classTitle = tv.getText().toString();
@@ -553,7 +553,7 @@ public class TranscriptActivity extends Activity {
 	
 	public void gradesClicked(View v) {
 		Log.d(getString(R.string.app_name), "grades clicked");
-		Toast.makeText(TranscriptActivity.this, "Grades Clicked", Toast.LENGTH_LONG).show();
+		//Toast.makeText(TranscriptActivity.this, "Grades Clicked", Toast.LENGTH_LONG).show();
 		
 		View infV = getLayoutInflater().inflate(R.layout.grade_popup, null);
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -598,26 +598,13 @@ public class TranscriptActivity extends Activity {
 		
 	}
 	
-	public void advSettingsClicked(View v) {
-		Log.d(getString(R.string.app_name), "Adv Settings Clicked");
-		View vP = (LinearLayout)v.getParent();
-		RelativeLayout rl = (RelativeLayout) vP.findViewById(R.id.relative_grades_adv);
-		
-		if(rl.getVisibility()==View.INVISIBLE) {
-			rl.setVisibility(View.VISIBLE);
-		}
-		else {
-			rl.setVisibility(View.INVISIBLE);
-		}
-		
-	}
-	
 	
 	public void backButtonClicked(View v) {
 		TranscriptActivity.this.finish();
 	}
 	
 	public void upButtonClicked(View v) {
+		
 		
 	}
 	
@@ -685,12 +672,14 @@ public class TranscriptActivity extends Activity {
 				R.drawable.letter_a,
 				R.drawable.letter_am,
 				R.drawable.letter_bp,
-				R.drawable.letter_b,
+				R.drawable.letter_bf,
 				R.drawable.letter_bm,
 				R.drawable.letter_cp,
-				R.drawable.letter_c,
+				R.drawable.letter_cf,
 				R.drawable.letter_cm,
-				R.drawable.letter_d,
+				R.drawable.letter_dp,
+				R.drawable.letter_df,
+				R.drawable.letter_dm,
 				R.drawable.letter_f,
 		};
 		
