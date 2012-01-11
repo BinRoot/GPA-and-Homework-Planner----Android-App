@@ -8,6 +8,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.util.Log;
+
 public class TodoParser {
 	public static TodoParser tp;
 	
@@ -72,7 +74,12 @@ public class TodoParser {
 	}
 	
 	public void deleteItem(TodoItem ti) {
+		
 		String desc = ti.getDesc();
+		
+		ti.getDue().setHours(0);
+		ti.getDue().setMinutes(0);
+		ti.getDue().setSeconds(0);
 		String due = ti.getDue().toString();
 		int priority = ti.getPriority();
 		boolean done = ti.getDone();
@@ -85,6 +92,7 @@ public class TodoParser {
 			JSONArray jb = new JSONArray();
 			for(int i=0; i<ja.length(); i++) {
 				JSONObject classObj = ja.getJSONObject(i);
+				
 				
 				if(!  (classObj.getString("desc").equals(desc) 
 					&& classObj.getString("due").equals(due)
@@ -100,6 +108,7 @@ public class TodoParser {
 					&& classObj.getBoolean("days7")==(days[6]) )) {
 					jb.put(classObj);
 				}
+				
 			}
 			
 			jo.remove("todo");

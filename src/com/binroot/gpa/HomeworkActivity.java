@@ -119,22 +119,18 @@ public class HomeworkActivity extends Activity {
 			this.classes = classes;
 		}
 		
-		@Override
 		public int getCount() {
 			return classes.size();
 		}
 
-		@Override
 		public String getItem(int position) {
 			return classes.get(position);
 		}
 
-		@Override
 		public long getItemId(int position) {
 			return position;
 		}
 
-		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			
 			View v = convertView;
@@ -161,7 +157,6 @@ public class HomeworkActivity extends Activity {
 			return v;
 		}
 		
-		@Override
 		public void onItemClick(AdapterView<?> arg0, View arg1, int pos, long arg3) {
 			String title = getItem(pos);
 			Intent i = new Intent(HomeworkActivity.this, TodoActivity.class);

@@ -39,6 +39,7 @@
 	    	android:layout_height="fill_parent"
 	    	android:layout_marginRight="50dip"
 	    	android:paddingLeft="20dip"
+	    	android:imeOptions="actionDone"
 	    	android:visibility="gone"
 	    	android:inputType="textAutoCorrect"
 	    	/>

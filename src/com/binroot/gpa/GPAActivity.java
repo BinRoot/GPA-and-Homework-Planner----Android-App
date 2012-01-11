@@ -57,7 +57,6 @@ public class GPAActivity extends Activity {
 			this.mode = mode;
 		}
 
-		@Override
 		public void onClick(View v) {
 			if(mode==Constants.ButtonHomework) {
 				Intent i = new Intent(GPAActivity.this, HomeworkActivity.class);
@@ -232,7 +231,7 @@ public class GPAActivity extends Activity {
 				String filename = Constants.File_Todo+"_"+period+"_"+classes.get(i);
 
 				// ---- here we go
-				// we're going to let TodoItem know about its cooresponding title
+				// we're going to let TodoItem know about its corresponding title
 
 				FileInputStream fis2 = null;
 				try {
@@ -386,7 +385,7 @@ public class GPAActivity extends Activity {
 
 
 		ArrayList<TodoItem> thingsToAdd = new ArrayList<TodoItem>();
-		
+		ArrayList<TodoItem> thingsToDel = new ArrayList<TodoItem>();
 		// scan through all todo items
 		// if old, and weekly, create new item
 		for(TodoItem tin : todoMegaList) {
@@ -402,24 +401,45 @@ public class GPAActivity extends Activity {
 			Log.d("cal", "now: "+dNow.toString()+" --- due: "+tin.getDue().toString());
 			//if(dNow.after(dDue)) {
 
-			long timeDiff = dDue.getTime()-dNow.getTime();
-
+			long timeDiff = dNow.getTime() - dDue.getTime();
+			
+			
 			// is older than 7 days
-			if(timeDiff >= 604800000) {
+			if(timeDiff >= (7*24*60*60*1000)) {
 				// TODO: delete this item!
-				Log.d("cal", "item is older than 7 days... will delete");
+				Log.d("cal", "item is older than 7 days... will delete: "+tin.getDesc());
+				/*
+				TodoParser.getInstance().deleteItem(tin);
+				updateTodoFile(TodoParser.getInstance().getJSON(), tin.getClassTitle());
+				*/
+				thingsToDel.add(tin);
+				
+				//todoList.remove(position);
+				//ta.notifyDataSetChanged();
+				
 			}
-			else if (tin.getWeekly()) {
-
+			else if (tin.getWeekly() && timeDiff<0) {
+				boolean restartDays = false;
+				int thingsAdded = 0;
 				Log.d("cal", "item is younger than 7 days and repeats weekly...");
-				for(int i=dNow.getDay(); i<dNow.getDay()+7; i++) {
+				
+				for(int i=dNow.getDay(); i<14; i++) {
 					Log.d("cal", "due at day "+i+"? --> "+megaDays[i]);
 					if(megaDays[i]==true) {
+						
+						
+						int oldi = i;
+						if(restartDays) {
+							i = 14+ i;
+						}
+						Log.d("cal", "on day "+i);
+						
+						
 						// add this item with the new date
 						int daysAway = i-dNow.getDay();
-						int msAway = 86400000*daysAway;
-
-						Date newDate = new Date(dNow.getTime()+msAway);
+						int msAway = 24*60*60*1000*daysAway;
+						long totalMS = dNow.getTime()+msAway;
+						Date newDate = new Date(totalMS);
 						TodoItem tin2 = new TodoItem(tin);
 						tin2.setDue(newDate);
 
@@ -430,11 +450,25 @@ public class GPAActivity extends Activity {
 						//Log.d("cal","todoMegaList contains tin: "+contains);
 						if(!contains) {
 							Log.d("cal", "Adding new date "+newDate.toString());
-							//TODO: add the item!
+							
 							thingsToAdd.add(tin2);
+							thingsAdded++;
 						}
 						else {
 							Log.d("cal", "NOT Adding new date "+newDate.toString());
+						}
+						
+						i = oldi;
+					}
+					
+					if(i==13 && thingsAdded<2 && restartDays==false) {
+						i=0;
+						restartDays = true;
+					}
+					
+					if(restartDays) {
+						if(i>=dNow.getDay()) {
+							break;
 						}
 						
 					}
@@ -461,7 +495,6 @@ public class GPAActivity extends Activity {
 		ta = new TodoMainAdapter(todoMegaList);
 		lv.setAdapter(ta);
 
-		//TODO set up this jMainT
 		for(TodoItem tin : thingsToAdd) {
 			
 			String filename = Constants.File_Todo+"_"+period+"_"+tin.getClassTitle();
@@ -502,10 +535,51 @@ public class GPAActivity extends Activity {
 			ta.todoList.add(tin);
 			ta.notifyDataSetChanged();
 		}
+		
+		for(TodoItem tin : thingsToDel) {
+			String filename = Constants.File_Todo+"_"+period+"_"+tin.getClassTitle();
+			
+			FileInputStream fisT = null;
+			try {
+				fisT = openFileInput(filename);
+			} catch (FileNotFoundException e) {
+				Log.d(getString(R.string.app_name), "Could not find file "+filename);
+			}
+			
+			// open file
+			StringBuilder total = null;
+			try {
+				BufferedReader r = new BufferedReader(new InputStreamReader(fisT));
+				total = new StringBuilder();
+				String line;
+				while ((line = r.readLine()) != null) {
+					total.append(line);
+				}
+
+			} catch (IOException e) {
+				Log.d(getString(R.string.app_name), "Could not read buffer "+Constants.File_Todo);
+			}
+			String todosJSONStr = total.toString();
+			
+			JSONObject jMainT = null;
+			try {
+				jMainT = new JSONObject(todosJSONStr);
+			} catch (JSONException e) {
+				Log.d(getString(R.string.app_name), "not proper JSON: "+e.getMessage());
+			}
+			
+			// TODO: bug might be here
+			TodoParser.getInstance().setJSON(jMainT);
+			TodoParser.getInstance().deleteItem(tin);
+			Log.d(getString(R.string.app_name), "jobject(tt) is "+TodoParser.getInstance().getJSON());
+			
+			updateTodoFile(TodoParser.getInstance().getJSON(), tin.getClassTitle());
+			ta.todoList.remove(tin);
+			ta.notifyDataSetChanged();
+		}
 
 		lv.setOnItemClickListener(new OnItemClickListener() {
 
-			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, final int arg2, long arg3) {
 				SlidingDrawer sd = (SlidingDrawer)findViewById(R.id.slidingDrawer);
 				sd.animateClose();
@@ -513,7 +587,6 @@ public class GPAActivity extends Activity {
 				Handler mHandler = new Handler();
 				mHandler.postDelayed(new Runnable() {
 
-					@Override
 					public void run() {
 						String classTitle = ta.todoList.get(arg2).getClassTitle();
 						Intent i = new Intent(GPAActivity.this, TodoActivity.class);
@@ -525,6 +598,10 @@ public class GPAActivity extends Activity {
 			}
 		});
 		ta.notifyDataSetChanged();
+	}
+	
+	static void deleteTodoItem(TodoItem ti) {
+		
 	}
 
 	boolean containsTI(TodoItem tin, ArrayList<TodoItem> todoMegaList) {
@@ -578,7 +655,6 @@ public class GPAActivity extends Activity {
 			
 			Collections.sort(todoList, new Comparator<TodoItem>() {
 				
-				@Override
 				public int compare(TodoItem o1, TodoItem o2) {
 					String date1Str = o1.getDue().toString();
 					String date1Arr[] = date1Str.split(" ");
@@ -605,22 +681,18 @@ public class GPAActivity extends Activity {
 			});
 		}
 
-		@Override
 		public int getCount() {
 			return todoList.size();
 		}
 
-		@Override
 		public TodoItem getItem(int position) {
 			return todoList.get(position);
 		}
 
-		@Override
 		public long getItemId(int position) {
 			return position;
 		}
 
-		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			View v = convertView;
 			if(v==null) {
@@ -698,6 +770,13 @@ public class GPAActivity extends Activity {
 			fos.write(jMain.toString().getBytes());
 		} catch (IOException e) {
 			Log.d(getString(R.string.app_name), "Could not write outputstream "+e.getMessage());
+			e.printStackTrace();
+		}
+		
+		try {
+			fos.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

@@ -23,7 +23,7 @@
 
 		<activity 
 			android:name=".TranscriptActivity"
-			android:windowSoftInputMode="adjustPan|adjustResize">
+			android:windowSoftInputMode="adjustPan">
 		</activity>
 		
 		<activity 

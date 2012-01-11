@@ -78,13 +78,16 @@ public class TodoActivity extends Activity {
 		storageInit();
 		
 		lv.setOnItemClickListener(new OnItemClickListener() {
-			@Override
+
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				//Toast.makeText(TodoActivity.this, "selected "+arg2, Toast.LENGTH_LONG).show();
 				
 				addClickedDefaults(null, ta.getItem(arg2));
 			}
 		});
+		
+		
+		((TextView)findViewById(R.id.text_todo_title)).setTextColor(getHashColor(title));
 
 	}
 
@@ -234,7 +237,7 @@ public class TodoActivity extends Activity {
 			Log.d(getString(R.string.app_name), "sorting!");
 			
 			Collections.sort(todoList, new Comparator<TodoItem>() {
-				@Override
+
 				public int compare(TodoItem o1, TodoItem o2) {
 					String date1Str = o1.getDue().toString();
 					String date1Arr[] = date1Str.split(" ");
@@ -266,22 +269,18 @@ public class TodoActivity extends Activity {
 			todoList.add(ti);
 		}
 
-		@Override
 		public int getCount() {
 			return todoList.size();
 		}
 
-		@Override
 		public TodoItem getItem(int position) {
 			return todoList.get(position);
 		}
 
-		@Override
 		public long getItemId(int position) {
 			return position;
 		}
 
-		@Override
 		public View getView(final int position, View convertView, ViewGroup parent) {
 			View v = convertView; 
 
@@ -317,7 +316,6 @@ public class TodoActivity extends Activity {
 			
 			db.setOnClickListener(new OnClickListener() {
 				
-				@Override
 				public void onClick(View v) {
 					TodoParser.getInstance().deleteItem(todoList.get(position));
 					updateFile(TodoParser.getInstance().getJSON());
@@ -327,7 +325,7 @@ public class TodoActivity extends Activity {
 			});
 			
 			cb.setOnClickListener(new OnClickListener() {
-				@Override
+
 				public void onClick(View v) {
 
 					if(getItem(position).getDone()) {
@@ -427,7 +425,7 @@ public class TodoActivity extends Activity {
 
 		date = (Button) todoView.findViewById(R.id.button_todo_popup_date);
 		date.setOnClickListener(new OnClickListener() {
-			@Override
+
 			public void onClick(View v) {
 				showDialog(DATE_DIALOG_ID);
 			}
@@ -531,7 +529,6 @@ public class TodoActivity extends Activity {
 		
 		sp.setOnItemSelectedListener(new OnItemSelectedListener() {
 			
-			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				Log.d(getString(R.string.app_name), "selected "+arg2);
 				if(arg2==2 && !editing2) {
@@ -553,7 +550,6 @@ public class TodoActivity extends Activity {
 					
 					builder.setMultiChoiceItems(days, daysPicked, new OnMultiChoiceClickListener() {
 
-						@Override
 						public void onClick(DialogInterface dialog, int which, boolean isChecked) {
 							Log.d(TodoActivity.this.getString(R.string.app_name), "selected "+which+", "+isChecked);
 							daysPicked[which] = isChecked;
@@ -661,13 +657,12 @@ public class TodoActivity extends Activity {
 				editing2 = false;
 			}
 
-			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {}
 		});
 		
 		Button editDays = (Button)todoView.findViewById(R.id.button_todo_pop_rep_days);
 		editDays.setOnClickListener(new OnClickListener() {
-			@Override
+
 			public void onClick(View v) {
 				AlertDialog.Builder builder = new AlertDialog.Builder(TodoActivity.this);
 				final CharSequence [] days = 
@@ -675,7 +670,6 @@ public class TodoActivity extends Activity {
 						"Thursday", "Friday", "Saturday"};
 				builder.setMultiChoiceItems(days, daysPicked, new OnMultiChoiceClickListener() {
 
-					@Override
 					public void onClick(DialogInterface dialog, int which, boolean isChecked) {
 						Log.d(TodoActivity.this.getString(R.string.app_name), "selected "+which+", "+isChecked);
 						daysPicked[which] = isChecked;
@@ -734,7 +728,7 @@ public class TodoActivity extends Activity {
 		
 		Button doneButton = (Button)todoView.findViewById(R.id.button_todo_popup_done);
 		doneButton.setOnClickListener(new OnClickListener() {
-			@Override
+
 			public void onClick(View v) {
 				
 				String desc = 
@@ -822,6 +816,13 @@ public class TodoActivity extends Activity {
 			fos.write(jMain.toString().getBytes());
 		} catch (IOException e) {
 			Log.d(getString(R.string.app_name), "Could not write outputstream "+e.getMessage());
+			e.printStackTrace();
+		}
+		
+		try {
+			fos.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

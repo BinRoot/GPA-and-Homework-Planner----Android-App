@@ -26,11 +26,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.View.OnLongClickListener;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
@@ -42,6 +46,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
 
@@ -227,7 +232,7 @@ public class TranscriptActivity extends Activity {
 		TranscriptParser.getInstance().setJSON(jMain);
 		ta = new TranscriptAdapter(classList);
 		lv.setAdapter(ta);
-		
+		//lv.setItemsCanFocus(true);
 	}
 
 
@@ -255,22 +260,18 @@ public class TranscriptActivity extends Activity {
 			classList.get(position).setSelectMode(false);
 		}
 		
-		@Override
 		public int getCount() {
 			return classList.size()+1;
 		}
 
-		@Override
 		public ClassItem getItem(int position) {
 			return (position<classList.size()) ? classList.get(position) : null;
 		}
 
-		@Override
 		public long getItemId(int position) {
 			return position;
 		}
 
-		@Override
 		public View getView(final int position, View convertView, ViewGroup parent) {
 			
 			View v = convertView;
@@ -335,7 +336,6 @@ public class TranscriptActivity extends Activity {
 				
 				((TextView)v.findViewById(R.id.text_transcript_classTitle)).setOnLongClickListener(new OnLongClickListener() {
 					
-					@Override
 					public boolean onLongClick(View v) {
 						//Toast.makeText(TranscriptActivity.this, "long clicked", Toast.LENGTH_LONG).show();
 						
@@ -408,23 +408,46 @@ public class TranscriptActivity extends Activity {
 		}
 	}
 	
-	public void addButtonClicked(View v) {
+	public void addButtonClicked(final View v) {
 		ta.addMode = true;
 		ta.notifyDataSetChanged();
+		
+		final LinearLayout vP = (LinearLayout) v.getParent();
+		final EditText et = (EditText)vP.findViewById(R.id.edit_addclass_title);
+		
+		et.setOnEditorActionListener(new OnEditorActionListener() {
+			public boolean onEditorAction(TextView ttv, int actionId, KeyEvent event) {
+				if (actionId == EditorInfo.IME_ACTION_DONE) {
+					InputMethodManager imm = (InputMethodManager)v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+					imm.hideSoftInputFromWindow(ttv.getWindowToken(), 0);
+					
+					Log.d(getString(R.string.app_name), "clicked done on keyboard");
+					addButtonApplied(vP.findViewById(R.id.button_addclass_title));
+					return true;
+				}
+				return false;
+			}
+		});
 		
 		Log.d(getString(R.string.app_name), "Add Button Clicked");
 	}
 	
-	public void addButtonApplied(View v) {
+	public void addButtonApplied(final View v) {
+		
+		
 		
 		Log.d(getString(R.string.app_name), "Add Button Applied");
 		ta.addMode = false;
 		
 		LinearLayout vP = (LinearLayout) v.getParent().getParent();
 		
+		
 		EditText et = (EditText)vP.findViewById(R.id.edit_addclass_title);
 		String title = et.getText().toString();
 		et.setText("");
+		
+		InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+		imm.hideSoftInputFromWindow(et.getWindowToken(), 0);
 		
 		boolean contains = false;
 		for(int i=0; i<ta.classList.size(); i++) {
@@ -453,12 +476,29 @@ public class TranscriptActivity extends Activity {
 		}// TODO remove edit text when contains is true
 	}
 	
-	public void editButtonClicked(View v) {
+	public void editButtonClicked(final View v) {
 		
 		RelativeLayout vP = (RelativeLayout)v.getParent();
 		
 		TextView tv = (TextView)vP.findViewById(R.id.text_transcript_classTitle);
 		String title = tv.getText().toString();
+		
+		
+		EditText etMain = (EditText)vP.findViewById(R.id.edit_editclass_title);
+		etMain.setOnEditorActionListener(new OnEditorActionListener() {
+			
+			public boolean onEditorAction(TextView ttv, int actionId, KeyEvent event) {
+				if (actionId == EditorInfo.IME_ACTION_DONE) {
+					InputMethodManager imm = (InputMethodManager)v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+					imm.hideSoftInputFromWindow(ttv.getWindowToken(), 0);
+					
+					Log.d(getString(R.string.app_name), "clicked done on keyboard");
+					editButtonClicked(v);
+					
+				}
+				return true;
+			}
+		});
 		
 		
 		for(int i=0; i<ta.classList.size(); i++) {
@@ -528,6 +568,9 @@ public class TranscriptActivity extends Activity {
 					// update list
 					ta.classList.get(i).setTitle(((EditText)vP.findViewById(R.id.edit_editclass_title)).getText().toString());
 					ta.itemSelectMode(i);
+					
+					InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+					imm.hideSoftInputFromWindow(etMain.getWindowToken(), 0);
 				}
 				break;
 			}
@@ -683,22 +726,18 @@ public class TranscriptActivity extends Activity {
 				R.drawable.letter_f,
 		};
 		
-		@Override
 		public int getCount() {
 			return gradeImageIds.length;
 		}
 
-		@Override
 		public Object getItem(int position) {
 			return gradeImageIds[position];
 		}
 
-		@Override
 		public long getItemId(int position) {
 			return position;
 		}
 
-		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			//View res = convertView;
 			

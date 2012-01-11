@@ -2,7 +2,8 @@
 <RelativeLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
-	android:layout_height="fill_parent">
+	android:layout_height="fill_parent"
+	android:background="@drawable/flowerbackground">
 
 	<RelativeLayout
 		android:id="@+id/relative_todo_top"
@@ -31,14 +32,22 @@
 		android:id="@+id/relative_todo_title"
 		android:layout_width="fill_parent"
 		android:layout_height="50dip"
-		android:layout_below="@id/relative_todo_top">
+		android:layout_below="@id/relative_todo_top"
+		android:background="@drawable/morepaper">
 		<TextView 
 			android:id="@+id/text_todo_title"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:text="Homework"
 			android:textAppearance="@android:style/TextAppearance.Large"
-			android:layout_centerHorizontal="true"/>
+			android:layout_centerHorizontal="true"
+			android:textSize="32sp"
+			android:shadowColor="#FFFFFF"
+			android:shadowDx="-2"
+			android:shadowDy="+5"
+			android:shadowRadius="10"
+			android:textColor="#FFF7EB"
+			android:textStyle="bold"/>
 			
 		<TextView 
 			android:id="@+id/text_todo_hw"

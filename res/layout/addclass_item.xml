@@ -24,7 +24,8 @@
 			android:id="@+id/edit_addclass_title"
 			android:layout_width="250dip"
 			android:layout_height="wrap_content"
-			android:inputType="textNoSuggestions"/>
+			android:inputType="textNoSuggestions"
+			android:imeOptions="actionDone"/>
 		<Button
 			android:id="@+id/button_addclass_title"
 			android:layout_width="wrap_content"
