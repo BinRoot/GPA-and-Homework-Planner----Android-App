@@ -120,6 +120,13 @@
 		android:layout_width="fill_parent"
 		android:layout_alignParentBottom="true"
 		android:layout_height="wrap_content"
+		android:textSize="24dip"
+		android:background="@drawable/greenbutton"
+		android:textColor="#FFFFFF"
+		android:shadowColor="#000000"
+		android:shadowDx="1"
+		android:shadowDy="1"
+		android:shadowRadius="5"
 		android:text="Done" />
 
 </RelativeLayout>

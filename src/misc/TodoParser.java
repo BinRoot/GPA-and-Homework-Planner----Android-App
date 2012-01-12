@@ -1,5 +1,6 @@
 package misc;
 
+import java.util.Date;
 import java.util.Iterator;
 
 import model.TodoItem;
@@ -75,11 +76,13 @@ public class TodoParser {
 	
 	public void deleteItem(TodoItem ti) {
 		
+		
 		String desc = ti.getDesc();
 		
-		ti.getDue().setHours(0);
-		ti.getDue().setMinutes(0);
-		ti.getDue().setSeconds(0);
+		//Date oldDate = ti.getDue();
+		//ti.getDue().setHours(0);
+		//ti.getDue().setMinutes(0);
+		//ti.getDue().setSeconds(0);
 		String due = ti.getDue().toString();
 		int priority = ti.getPriority();
 		boolean done = ti.getDone();
@@ -106,14 +109,19 @@ public class TodoParser {
 					&& classObj.getBoolean("days5")==(days[4])
 					&& classObj.getBoolean("days6")==(days[5])
 					&& classObj.getBoolean("days7")==(days[6]) )) {
+					
 					jb.put(classObj);
+					
+					//Log.d("parser", "NOT deleting "+classObj.getString("desc")+", due: "+classObj.getString("due"));
 				}
-				
+				else {
+					//Log.d("parser", "YES deleting "+classObj.getString("desc")+", due: "+classObj.getString("due"));
+				}
 			}
 			
 			jo.remove("todo");
 			jo.accumulate("todo", jb);
-
+			 
 		} catch (JSONException e) { }
 	}
 }

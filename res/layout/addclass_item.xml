@@ -13,6 +13,13 @@
 		android:visibility="visible"
 		android:text="+ Add Class"
 		android:layout_weight="1"
+		android:textColor="#FFFFFF"
+		android:shadowColor="#000000"
+		android:shadowDx="1"
+		android:shadowDy="1"
+		android:shadowRadius="5"
+		android:textAppearance="@android:style/TextAppearance.Medium"
+		android:background="@drawable/greenbutton"
 		android:onClick="addButtonClicked" />
 	<LinearLayout
 		android:id="@+id/linear_addclass_edit"

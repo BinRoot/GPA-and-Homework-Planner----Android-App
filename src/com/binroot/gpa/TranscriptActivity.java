@@ -409,6 +409,8 @@ public class TranscriptActivity extends Activity {
 	}
 	
 	public void addButtonClicked(final View v) {
+		
+		/*
 		ta.addMode = true;
 		ta.notifyDataSetChanged();
 		
@@ -429,7 +431,7 @@ public class TranscriptActivity extends Activity {
 			}
 		});
 		
-		Log.d(getString(R.string.app_name), "Add Button Clicked");
+		Log.d(getString(R.string.app_name), "Add Button Clicked");*/
 	}
 	
 	public void addButtonApplied(final View v) {

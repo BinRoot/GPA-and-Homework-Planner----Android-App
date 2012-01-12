@@ -1,0 +1,563 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:background="@drawable/griddy"
+	android:orientation="vertical">
+	
+    <RelativeLayout
+		android:id="@+id/relative_main_top"
+		style="@style/TopBar_relative">
+		<Button
+			android:id="@+id/button_settings_logo"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:layout_centerInParent="true"
+			android:textAppearance="@android:style/TextAppearance.Large"
+			android:text="LOGO" />
+	</RelativeLayout>
+
+	<RelativeLayout
+		android:layout_width="fill_parent"
+		android:layout_height="60dip">
+		<TextView 
+		   	android:id="@+id/text_settings_period"
+		   	android:padding="10dip"
+		   	android:textSize="24dip"
+		   	android:layout_width="wrap_content"
+		   	android:layout_height="wrap_content"
+		   	android:textColor="#000000"
+		   	android:text="Fall 2011"
+		   	android:layout_centerInParent="true"/>
+		<Button
+			android:id="@+id/button_main_logo"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:background="@android:drawable/ic_menu_edit"
+			android:layout_alignParentRight="true"
+			android:layout_centerVertical="true"
+			android:paddingTop="10dip"
+			android:layout_marginRight="30dip"/>
+	</RelativeLayout>
+	
+	<ScrollView 
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent">
+		<LinearLayout 
+		    android:layout_width="fill_parent"
+		    android:layout_height="fill_parent"
+		    android:orientation="vertical">
+		    
+		    
+		    <LinearLayout 
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:orientation="horizontal">
+		        <RelativeLayout 
+		            android:layout_width="fill_parent"
+		            android:layout_height="fill_parent"
+		            android:layout_weight="1">
+		            <TextView 
+		                style="@style/settings_grade"
+		                android:layout_centerInParent="true"
+		                android:text="A+"/>
+		        </RelativeLayout>
+		        <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1" >
+                    <Button
+                        android:onClick="apclickedm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="-" />
+                    <EditText 
+                        android:id="@+id/edit_settings_ap"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="4.0"
+                        android:numeric="decimal"
+                        android:layout_weight="1" />
+                    <Button
+                        android:onClick="apclickedp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="+" />
+                </LinearLayout>
+            </LinearLayout>
+            
+		    <LinearLayout 
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:orientation="horizontal">
+		        <RelativeLayout 
+		            android:layout_width="fill_parent"
+		            android:layout_height="fill_parent"
+		            android:layout_weight="1">
+		            <TextView 
+		                style="@style/settings_grade"
+		                android:layout_centerInParent="true"
+		                android:text="A  "/>
+		        </RelativeLayout>
+		        <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1" >
+                    <Button
+                        android:onClick="aclickedm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="-" />
+                    <EditText 
+                        android:id="@+id/edit_settings_a"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="4.0"
+                        android:numeric="decimal"
+                        android:layout_weight="1" />
+                    <Button
+                        android:onClick="aclickedp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="+" />
+                </LinearLayout>
+            </LinearLayout>
+            
+		    <LinearLayout 
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:orientation="horizontal">
+		        <RelativeLayout 
+		            android:layout_width="fill_parent"
+		            android:layout_height="fill_parent"
+		            android:layout_weight="1">
+		            <TextView 
+		                style="@style/settings_grade"
+		                android:layout_centerInParent="true"
+		                android:text="A-"/>
+		        </RelativeLayout>
+		        <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1" >
+                    <Button
+                        android:onClick="amclickedm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="-" />
+                    <EditText 
+                        android:id="@+id/edit_settings_am"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3.7"
+                        android:numeric="decimal"
+                        android:layout_weight="1" />
+                    <Button
+                        android:onClick="amclickedp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="+" />
+                </LinearLayout>
+            </LinearLayout>
+            
+		    <LinearLayout 
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:orientation="horizontal">
+		        <RelativeLayout 
+		            android:layout_width="fill_parent"
+		            android:layout_height="fill_parent"
+		            android:layout_weight="1">
+		            <TextView 
+		                style="@style/settings_grade"
+		                android:layout_centerInParent="true"
+		                android:text="B+"/>
+		        </RelativeLayout>
+		        <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1" >
+                    <Button
+                        android:onClick="bpclickedm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="-" />
+                    <EditText 
+                        android:id="@+id/edit_settings_bp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3.3"
+                        android:numeric="decimal"
+                        android:layout_weight="1" />
+                    <Button
+                        android:onClick="bpclickedp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="+" />
+                </LinearLayout>
+            </LinearLayout>
+		    
+		    <LinearLayout 
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:orientation="horizontal">
+		        <RelativeLayout 
+		            android:layout_width="fill_parent"
+		            android:layout_height="fill_parent"
+		            android:layout_weight="1">
+		            <TextView 
+		                style="@style/settings_grade"
+		                android:layout_centerInParent="true"
+		                android:text="B  "/>
+		        </RelativeLayout>
+		        <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1" >
+                    <Button
+                        android:onClick="bclickedm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="-" />
+                    <EditText 
+                        android:id="@+id/edit_settings_b"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3.0"
+                        android:numeric="decimal"
+                        android:layout_weight="1" />
+                    <Button
+                        android:onClick="bclickedp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="+" />
+                </LinearLayout>
+            </LinearLayout>
+            
+		    <LinearLayout 
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:orientation="horizontal">
+		        <RelativeLayout 
+		            android:layout_width="fill_parent"
+		            android:layout_height="fill_parent"
+		            android:layout_weight="1">
+		            <TextView 
+		                style="@style/settings_grade"
+		                android:layout_centerInParent="true"
+		                android:text="B-"/>
+		        </RelativeLayout>
+		        <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1" >
+                    <Button
+                        android:onClick="bmclickedm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="-" />
+                    <EditText 
+                        android:id="@+id/edit_settings_bm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2.7"
+                        android:numeric="decimal"
+                        android:layout_weight="1" />
+                    <Button
+                        android:onClick="bmclickedp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="+" />
+                </LinearLayout>
+            </LinearLayout>
+            
+		    <LinearLayout 
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:orientation="horizontal">
+		        <RelativeLayout 
+		            android:layout_width="fill_parent"
+		            android:layout_height="fill_parent"
+		            android:layout_weight="1">
+		            <TextView 
+		                style="@style/settings_grade"
+		                android:layout_centerInParent="true"
+		                android:text="C+"/>
+		        </RelativeLayout>
+		        <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1" >
+                    <Button
+                        android:onClick="cpclickedm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="-" />
+                    <EditText 
+                        android:id="@+id/edit_settings_cp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2.3"
+                        android:numeric="decimal"
+                        android:layout_weight="1" />
+                    <Button
+                        android:onClick="cpclickedp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="+" />
+                </LinearLayout>
+            </LinearLayout>
+            
+		    <LinearLayout 
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:orientation="horizontal">
+		        <RelativeLayout 
+		            android:layout_width="fill_parent"
+		            android:layout_height="fill_parent"
+		            android:layout_weight="1">
+		            <TextView 
+		                style="@style/settings_grade"
+		                android:layout_centerInParent="true"
+		                android:text="C  "/>
+		        </RelativeLayout>
+		        <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1" >
+                    <Button
+                        android:onClick="cclickedm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="-" />
+                    <EditText 
+                        android:id="@+id/edit_settings_c"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2.0"
+                        android:numeric="decimal"
+                        android:layout_weight="1" />
+                    <Button
+                        android:onClick="cclickedp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="+" />
+                </LinearLayout>
+            </LinearLayout>
+            
+		    <LinearLayout 
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:orientation="horizontal">
+		        <RelativeLayout 
+		            android:layout_width="fill_parent"
+		            android:layout_height="fill_parent"
+		            android:layout_weight="1">
+		            <TextView 
+		                style="@style/settings_grade"
+		                android:layout_centerInParent="true"
+		                android:text="C-"/>
+		        </RelativeLayout>
+		        <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1" >
+                    <Button
+                        android:onClick="cmclickedm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="-" />
+                    <EditText 
+                        android:id="@+id/edit_settings_cm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1.7"
+                        android:numeric="decimal"
+                        android:layout_weight="1" />
+                    <Button
+                        android:onClick="cmclickedp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="+" />
+                </LinearLayout>
+            </LinearLayout>
+		    
+		    <LinearLayout 
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:orientation="horizontal">
+		        <RelativeLayout 
+		            android:layout_width="fill_parent"
+		            android:layout_height="fill_parent"
+		            android:layout_weight="1">
+		            <TextView 
+		                style="@style/settings_grade"
+		                android:layout_centerInParent="true"
+		                android:text="D+"/>
+		        </RelativeLayout>
+		        <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1" >
+                    <Button
+                        android:onClick="dpclickedm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="-" />
+                    <EditText 
+                        android:id="@+id/edit_settings_dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1.3"
+                        android:numeric="decimal"
+                        android:layout_weight="1" />
+                    <Button
+                        android:onClick="dpclickedp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="+" />
+                </LinearLayout>
+            </LinearLayout>
+            
+		    <LinearLayout 
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:orientation="horizontal">
+		        <RelativeLayout 
+		            android:layout_width="fill_parent"
+		            android:layout_height="fill_parent"
+		            android:layout_weight="1">
+		            <TextView 
+		                style="@style/settings_grade"
+		                android:layout_centerInParent="true"
+		                android:text="D  "/>
+		        </RelativeLayout>
+		        <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1" >
+                    <Button
+                        android:onClick="dclickedm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="-" />
+                    <EditText 
+                        android:id="@+id/edit_settings_d"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1.0"
+                        android:numeric="decimal"
+                        android:layout_weight="1" />
+                    <Button
+                        android:onClick="dclickedp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="+" />
+                </LinearLayout>
+            </LinearLayout>
+            
+		    <LinearLayout 
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:orientation="horizontal">
+		        <RelativeLayout 
+		            android:layout_width="fill_parent"
+		            android:layout_height="fill_parent"
+		            android:layout_weight="1">
+		            <TextView 
+		                style="@style/settings_grade"
+		                android:layout_centerInParent="true"
+		                android:text="D-"/>
+		        </RelativeLayout>
+		        <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1" >
+                    <Button
+                        android:onClick="dmclickedm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="-" />
+                    <EditText 
+                        android:id="@+id/edit_settings_dm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0.7"
+                        android:numeric="decimal"
+                        android:layout_weight="1" />
+                    <Button
+                        android:onClick="dmclickedp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="+" />
+                </LinearLayout>
+            </LinearLayout>
+            
+		    <LinearLayout 
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:orientation="horizontal">
+		        <RelativeLayout 
+		            android:layout_width="fill_parent"
+		            android:layout_height="fill_parent"
+		            android:layout_weight="1">
+		            <TextView 
+		                style="@style/settings_grade"
+		                android:layout_centerInParent="true"
+		                android:text="F  "/>
+		        </RelativeLayout>
+		        <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1" >
+                    <Button
+                        android:onClick="fclickedm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="-" />
+                    <EditText 
+                        android:id="@+id/edit_settings_f"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0.0"
+                        android:numeric="decimal"
+                        android:layout_weight="1" />
+                    <Button
+                        android:onClick="fclickedp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="+" />
+                </LinearLayout>
+            </LinearLayout>
+		    
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

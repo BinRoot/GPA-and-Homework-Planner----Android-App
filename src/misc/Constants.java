@@ -3,6 +3,7 @@ package misc;
 public class Constants {
 	public static int ButtonHomework = 1;
 	public static int ButtonTranscript = 2;
+	public static int ButtonSettings = 3;
 	
 	public static int Spring = 0;
 	public static int Summer = 1;

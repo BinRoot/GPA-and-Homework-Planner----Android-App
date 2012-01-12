@@ -45,6 +45,7 @@ public class GPAActivity extends Activity {
 
 	Button transcriptBtn;
 	Button homeworkBtn;
+	Button settingsBtn;
 	ListView lv;
 	TodoMainAdapter ta;
 	String period = null;
@@ -57,6 +58,8 @@ public class GPAActivity extends Activity {
 			this.mode = mode;
 		}
 
+		
+		
 		public void onClick(View v) {
 			if(mode==Constants.ButtonHomework) {
 				Intent i = new Intent(GPAActivity.this, HomeworkActivity.class);
@@ -68,6 +71,14 @@ public class GPAActivity extends Activity {
 			}
 			else if(mode==Constants.ButtonTranscript) {
 				Intent i = new Intent(GPAActivity.this, TranscriptActivity.class);
+				i.putExtra("period", period);
+
+				Log.d(getString(R.string.app_name), "Launching TranscriptActivity... "
+						+ "with period: "+period);
+				startActivity(i);
+			}
+			else if(mode==Constants.ButtonSettings) {
+				Intent i = new Intent(GPAActivity.this, SettingsActivity.class);
 				i.putExtra("period", period);
 
 				Log.d(getString(R.string.app_name), "Launching TranscriptActivity... "
@@ -87,6 +98,9 @@ public class GPAActivity extends Activity {
 
 		homeworkBtn = (Button) findViewById(R.id.button_main_homework);
 		homeworkBtn.setOnClickListener(new MainButtonListener(Constants.ButtonHomework));
+		
+		settingsBtn = (Button) findViewById(R.id.button_main_settings);
+		settingsBtn.setOnClickListener(new MainButtonListener(Constants.ButtonSettings));
 
 		storageInit();
 
@@ -127,6 +141,21 @@ public class GPAActivity extends Activity {
 			try {
 				period = year+" "+season;
 				jMain.accumulate("period", period);
+				
+				jMain.accumulate("gpa_ap", 4.0);
+				jMain.accumulate("gpa_a", 4.0);
+				jMain.accumulate("gpa_am", 3.7);
+				jMain.accumulate("gpa_bp", 3.3);
+				jMain.accumulate("gpa_b", 3.0);
+				jMain.accumulate("gpa_bm", 2.7);
+				jMain.accumulate("gpa_cp", 2.3);
+				jMain.accumulate("gpa_c", 2.0);
+				jMain.accumulate("gpa_cm", 1.7);
+				jMain.accumulate("gpa_dp", 1.3);
+				jMain.accumulate("gpa_d", 1.0);
+				jMain.accumulate("gpa_dm", 0.7);
+				jMain.accumulate("gpa_f", 0.0);
+				
 			} 
 			catch (JSONException e) {
 				Log.d(getString(R.string.app_name), "JSON err: "+e.getMessage());
@@ -440,6 +469,9 @@ public class GPAActivity extends Activity {
 						int msAway = 24*60*60*1000*daysAway;
 						long totalMS = dNow.getTime()+msAway;
 						Date newDate = new Date(totalMS);
+						newDate.setHours(0);
+						newDate.setMinutes(0);
+						newDate.setSeconds(0);
 						TodoItem tin2 = new TodoItem(tin);
 						tin2.setDue(newDate);
 

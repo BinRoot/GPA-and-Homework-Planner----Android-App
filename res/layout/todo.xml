@@ -63,7 +63,8 @@
 		android:id="@+id/list_todo"
 		android:layout_below="@id/relative_todo_title"
 		android:layout_width="fill_parent"
-		android:layout_height="fill_parent">
+		android:layout_height="fill_parent"
+		 android:cacheColorHint="#00000000">
 	</ListView>
 
 </RelativeLayout>

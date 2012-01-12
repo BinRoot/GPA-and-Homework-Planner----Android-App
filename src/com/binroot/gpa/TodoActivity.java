@@ -75,8 +75,7 @@ public class TodoActivity extends Activity {
 			((TextView)findViewById(R.id.text_todo_title)).setText(title);
 		}
 
-		storageInit();
-		
+		lv = (ListView) findViewById(R.id.list_todo);
 		lv.setOnItemClickListener(new OnItemClickListener() {
 
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
@@ -88,6 +87,13 @@ public class TodoActivity extends Activity {
 		
 		
 		((TextView)findViewById(R.id.text_todo_title)).setTextColor(getHashColor(title));
+
+	}
+	
+	public void onResume() {
+		super.onResume();
+		
+		storageInit();
 
 	}
 
@@ -211,7 +217,7 @@ public class TodoActivity extends Activity {
 		} // end JSON not null
 
 
-		lv = (ListView) findViewById(R.id.list_todo);
+		
 
 		//todoList.add(new TodoItem("", null, 0, null, false));
 		TodoParser.getInstance().setJSON(jMain);
@@ -317,7 +323,10 @@ public class TodoActivity extends Activity {
 			db.setOnClickListener(new OnClickListener() {
 				
 				public void onClick(View v) {
+					Log.d("GPA", "del: "+TodoParser.getInstance().getJSON().toString());
 					TodoParser.getInstance().deleteItem(todoList.get(position));
+					Log.d("GPA", "del: "+TodoParser.getInstance().getJSON().toString());
+					
 					updateFile(TodoParser.getInstance().getJSON());
 					todoList.remove(position);
 					ta.notifyDataSetChanged();
