@@ -415,6 +415,7 @@ public class GPAActivity extends Activity {
 
 		ArrayList<TodoItem> thingsToAdd = new ArrayList<TodoItem>();
 		ArrayList<TodoItem> thingsToDel = new ArrayList<TodoItem>();
+		ArrayList<TodoItem> thingsToHide = new ArrayList<TodoItem>();
 		// scan through all todo items
 		// if old, and weekly, create new item
 		for(TodoItem tin : todoMegaList) {
@@ -447,7 +448,7 @@ public class GPAActivity extends Activity {
 				//ta.notifyDataSetChanged();
 				
 			}
-			else if (tin.getWeekly() && timeDiff<0) {
+			else if (tin.getWeekly() && timeDiff<0 && timeDiff>-7*24*60*60*1000) {
 				boolean restartDays = false;
 				int thingsAdded = 0;
 				Log.d("cal", "item is younger than 7 days and repeats weekly...");
@@ -507,6 +508,9 @@ public class GPAActivity extends Activity {
 				}
 
 			}
+			if(tin.isDone()) {
+				thingsToHide.add(tin);
+			}
 
 
 			//}
@@ -527,6 +531,7 @@ public class GPAActivity extends Activity {
 		ta = new TodoMainAdapter(todoMegaList);
 		lv.setAdapter(ta);
 
+		
 		for(TodoItem tin : thingsToAdd) {
 			
 			String filename = Constants.File_Todo+"_"+period+"_"+tin.getClassTitle();
@@ -608,6 +613,12 @@ public class GPAActivity extends Activity {
 			updateTodoFile(TodoParser.getInstance().getJSON(), tin.getClassTitle());
 			ta.todoList.remove(tin);
 			ta.notifyDataSetChanged();
+		}
+		
+		for(TodoItem tin : thingsToHide) {
+			ta.todoList.remove(tin);
+			ta.notifyDataSetChanged();
+			Log.d("GPA", "hiding "+tin.getDesc());
 		}
 
 		lv.setOnItemClickListener(new OnItemClickListener() {

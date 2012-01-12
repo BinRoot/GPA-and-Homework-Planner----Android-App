@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -56,6 +57,21 @@ public class TranscriptActivity extends Activity {
 	TranscriptAdapter ta;
 	JSONObject jMain = new JSONObject();
 	
+	double gpa_ap;
+	double gpa_a;
+	double gpa_am;
+	double gpa_bp;
+	double gpa_b;
+	double gpa_bm;
+	double gpa_cp;
+	double gpa_c;
+	double gpa_cm;
+	double gpa_dp;
+	double gpa_d;
+	double gpa_dm;
+	double gpa_f;
+
+	
 	int posGradeSelected = -1;
 	AlertDialog alert;
 	
@@ -87,6 +103,126 @@ public class TranscriptActivity extends Activity {
 		
 	} // end onCreate
 	
+	
+	public void onResume() {
+		super.onResume();
+		
+		updateGPAVals();
+		updateGPAText();
+	}
+	
+	public void updateGPAText() {
+		// TODO update texts
+		
+		double credits = 0;
+		double gradePoints = 0;
+		
+		for(ClassItem ci : ta.classList) {
+			credits += ci.getCredits();
+			
+			if( ci.getGradeMain()==Constants.GradeAp ) {
+				gradePoints += ci.getCredits() * gpa_ap;
+			}
+			else if( ci.getGradeMain()==Constants.GradeAf ) {
+				gradePoints += ci.getCredits() * gpa_a;
+			}
+			else if( ci.getGradeMain()==Constants.GradeAm ) {
+				gradePoints += ci.getCredits() * gpa_am;
+			}
+			else if( ci.getGradeMain()==Constants.GradeBp ) {
+				gradePoints += ci.getCredits() * gpa_bp;
+			}
+			else if( ci.getGradeMain()==Constants.GradeBf ) {
+				gradePoints += ci.getCredits() * gpa_b;
+			}
+			else if( ci.getGradeMain()==Constants.GradeBm ) {
+				gradePoints += ci.getCredits() * gpa_b;
+			}
+			else if( ci.getGradeMain()==Constants.GradeCp ) {
+				gradePoints += ci.getCredits() * gpa_cp;
+			}
+			else if( ci.getGradeMain()==Constants.GradeCf ) {
+				gradePoints += ci.getCredits() * gpa_c;
+			}
+			else if( ci.getGradeMain()==Constants.GradeCm ) {
+				gradePoints += ci.getCredits() * gpa_c;
+			}
+			else if( ci.getGradeMain()==Constants.GradeDp ) {
+				gradePoints += ci.getCredits() * gpa_dp;
+			}
+			else if( ci.getGradeMain()==Constants.GradeDf ) {
+				gradePoints += ci.getCredits() * gpa_d;
+			}
+			else if( ci.getGradeMain()==Constants.GradeDm ) {
+				gradePoints += ci.getCredits() * gpa_d;
+			}
+			else if( ci.getGradeMain()==Constants.GradeF ) {
+				gradePoints += ci.getCredits() * gpa_f;
+			}
+		}
+		
+		double gpa = gradePoints / credits;
+		
+		DecimalFormat df = new DecimalFormat("0.0##");
+		
+		((TextView) findViewById(R.id.text_transcript_gpa)).setText("GPA: "+df.format(gpa));
+		((TextView) findViewById(R.id.text_transcript_credits)).setText("Total credits: "+credits);
+	}
+	
+	public void updateGPAVals() {
+		FileInputStream fis = null;
+		try {
+			fis = openFileInput(Constants.File_MainSettings);
+		} catch (FileNotFoundException e) {
+			Log.d(getString(R.string.app_name), "Could not find file "+Constants.File_MainSettings);
+		}
+
+		
+		StringBuilder total = null;
+		try {
+			BufferedReader r = new BufferedReader(new InputStreamReader(fis));
+			total = new StringBuilder();
+			String line;
+			while ((line = r.readLine()) != null) {
+				total.append(line);
+			}
+			//fis.read(buf);
+			//bis.read(buf);
+		} catch (IOException e) {
+			Log.d(getString(R.string.app_name), "Could not read buffer "+Constants.File_TranscriptList);
+		}
+		String transcriptJSONStr = total.toString();
+
+		Log.d(getString(R.string.app_name), "json from file: "+transcriptJSONStr);
+
+		JSONObject jMain = null;
+		try {
+			jMain = new JSONObject(transcriptJSONStr);
+		} catch (JSONException e) {
+			Log.d(getString(R.string.app_name), "not proper JSON: "+transcriptJSONStr);
+		}
+
+		if(jMain!=null) {
+			try {
+				//period = jMain.getString("period");
+				gpa_ap = Double.parseDouble( jMain.getString("gpa_ap") );
+				gpa_a = Double.parseDouble( jMain.getString("gpa_a") );
+				gpa_am = Double.parseDouble( jMain.getString("gpa_am") );
+				gpa_bp = Double.parseDouble( jMain.getString("gpa_bp") );
+				gpa_b = Double.parseDouble( jMain.getString("gpa_b") );
+				gpa_bm = Double.parseDouble( jMain.getString("gpa_bm") );
+				gpa_cp = Double.parseDouble( jMain.getString("gpa_cp") );
+				gpa_c = Double.parseDouble( jMain.getString("gpa_c") );
+				gpa_cm = Double.parseDouble( jMain.getString("gpa_cm") );
+				gpa_dp = Double.parseDouble( jMain.getString("gpa_dp") );
+				gpa_d = Double.parseDouble( jMain.getString("gpa_d") );
+				gpa_dm = Double.parseDouble( jMain.getString("gpa_dm") );
+				gpa_f = Double.parseDouble( jMain.getString("gpa_f") );
+
+				
+			} catch (JSONException e) {	}
+		}
+	}
 	
 	private void storageInit() {
 		
@@ -240,7 +376,7 @@ public class TranscriptActivity extends Activity {
 	
 	public class TranscriptAdapter extends BaseAdapter {
 
-		ArrayList<ClassItem> classList;
+		public ArrayList<ClassItem> classList;
 		public boolean addMode = false;
 		
 		public TranscriptAdapter(ArrayList<ClassItem> classList) {
@@ -408,9 +544,23 @@ public class TranscriptActivity extends Activity {
 		}
 	}
 	
+	public void moreButtonClicked(final View v) {
+		
+		
+		RelativeLayout rlGPA = (RelativeLayout) findViewById(R.id.relative_transcript_gpa);
+		if(rlGPA.getVisibility() == View.GONE) {
+			rlGPA.setVisibility(View.VISIBLE);
+			v.setBackgroundDrawable(getResources().getDrawable(android.R.drawable.ic_menu_revert));
+		}
+		else {
+			rlGPA.setVisibility(View.GONE);
+			v.setBackgroundDrawable(getResources().getDrawable(android.R.drawable.ic_menu_more));
+		}
+		
+	}
+	
 	public void addButtonClicked(final View v) {
 		
-		/*
 		ta.addMode = true;
 		ta.notifyDataSetChanged();
 		
@@ -431,7 +581,7 @@ public class TranscriptActivity extends Activity {
 			}
 		});
 		
-		Log.d(getString(R.string.app_name), "Add Button Clicked");*/
+		Log.d(getString(R.string.app_name), "Add Button Clicked");
 	}
 	
 	public void addButtonApplied(final View v) {
@@ -526,6 +676,9 @@ public class TranscriptActivity extends Activity {
 					// open file
 					StringBuilder total = null;
 					try {
+						
+						//TODO: NullPointerException when editing newly created class
+						
 						BufferedReader r = new BufferedReader(new InputStreamReader(fisTodo));
 						total = new StringBuilder();
 						String line;
@@ -764,6 +917,8 @@ public class TranscriptActivity extends Activity {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		updateGPAText();
 	}
 	
 	public static String numToGrade(String num) {

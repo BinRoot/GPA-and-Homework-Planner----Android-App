@@ -27,6 +27,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnMultiChoiceClickListener;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -431,6 +432,14 @@ public class TodoActivity extends Activity {
 		builder.setView(todoView);
 		alert = builder.create();
 		alert.show();
+	
+		alert.setOnCancelListener(new OnCancelListener() {
+			
+			public void onCancel(DialogInterface dialog) {
+				Log.d("GPA", "canceled");
+				removeDialog(DATE_DIALOG_ID);
+			}
+		});
 
 		date = (Button) todoView.findViewById(R.id.button_todo_popup_date);
 		date.setOnClickListener(new OnClickListener() {
@@ -740,6 +749,8 @@ public class TodoActivity extends Activity {
 
 			public void onClick(View v) {
 				
+				removeDialog(DATE_DIALOG_ID);
+				
 				String desc = 
 					((EditText)todoView.findViewById(R.id.edit_todo_pop_desc)).getText().toString();
 				
@@ -856,6 +867,7 @@ public class TodoActivity extends Activity {
 		date.setGravity(Gravity.LEFT);
 		date.setGravity(Gravity.CENTER_VERTICAL);
 		date.setText(dArr[0]+", "+dArr[1] +" "+dArr[2]);
+		
 	}
 	
 
@@ -867,18 +879,22 @@ public class TodoActivity extends Activity {
 			mYear = year;
 			mMonth = monthOfYear;
 			mDay = dayOfMonth;
+			
 			updateDisplay();
 		}
 	};
-
+	
 	@Override
 	protected Dialog onCreateDialog(int id) {
-		switch (id) {
-		case DATE_DIALOG_ID:
+		if(id== DATE_DIALOG_ID) {
+			Log.d("GPA", "onCreateDialog");
+			
 			return new DatePickerDialog(this, mDateSetListener, mYear, mMonth, mDay);
 		}
 		return null;
 	}
+	
+	
 
 	int monthToNum(String monthStr) {
 		String months[] = {"Jan", "Feb", "Mar", "Apr", 

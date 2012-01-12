@@ -161,21 +161,24 @@ public class SettingsActivity extends Activity {
 
 		if(jMain!=null) {
 			jMainT = jMain;
+			
+			DecimalFormat df = new DecimalFormat("0.0##");
+			
 			try {
 				//period = jMain.getString("period");
-				edit_ap.setText( jMain.getString("gpa_ap") );
-				edit_a.setText( jMain.getString("gpa_a") );
-				edit_am.setText( jMain.getString("gpa_am") );
-				edit_bp.setText( jMain.getString("gpa_bp") );
-				edit_b.setText( jMain.getString("gpa_b") );
-				edit_bm.setText( jMain.getString("gpa_bm") );
-				edit_cp.setText( jMain.getString("gpa_cp") );
-				edit_c.setText( jMain.getString("gpa_c") );
-				edit_cm.setText( jMain.getString("gpa_cm") );
-				edit_dp.setText( jMain.getString("gpa_dp") );
-				edit_d.setText( jMain.getString("gpa_d") );
-				edit_dm.setText( jMain.getString("gpa_dm") );
-				edit_f.setText( jMain.getString("gpa_f") );
+				edit_ap.setText( df.format(Double.parseDouble(jMain.getString("gpa_ap"))) );
+				edit_a.setText( df.format(Double.parseDouble(jMain.getString("gpa_a"))) );
+				edit_am.setText( df.format(Double.parseDouble(jMain.getString("gpa_am"))) );
+				edit_bp.setText( df.format(Double.parseDouble(jMain.getString("gpa_bp"))) );
+				edit_b.setText( df.format(Double.parseDouble(jMain.getString("gpa_b"))) );
+				edit_bm.setText( df.format(Double.parseDouble(jMain.getString("gpa_bm"))) );
+				edit_cp.setText( df.format(Double.parseDouble(jMain.getString("gpa_cp"))) );
+				edit_c.setText( df.format(Double.parseDouble(jMain.getString("gpa_c"))) );
+				edit_cm.setText( df.format(Double.parseDouble(jMain.getString("gpa_cm"))) );
+				edit_dp.setText( df.format(Double.parseDouble(jMain.getString("gpa_dp"))) );
+				edit_d.setText( df.format(Double.parseDouble(jMain.getString("gpa_d"))) );
+				edit_dm.setText( df.format(Double.parseDouble(jMain.getString("gpa_dm"))) );
+				edit_f.setText( df.format(Double.parseDouble(jMain.getString("gpa_f"))) );
 				
 			} catch (JSONException e) {	}
 		}
