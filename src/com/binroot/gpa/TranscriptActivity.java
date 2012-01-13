@@ -467,6 +467,7 @@ public class TranscriptActivity extends Activity {
 				}
 				
 				((TextView)v.findViewById(R.id.text_transcript_classTitle)).setText(classList.get(position).getTitle());
+				((TextView)v.findViewById(R.id.text_transcript_classTitle)).setTextColor(getHashColor(classList.get(position).getTitle()));
 				((TextView)v.findViewById(R.id.text_transcript_gradeMain)).setText(numToGrade(classList.get(position).getGradeMain()));
 				((TextView)v.findViewById(R.id.text_transcript_credits)).setText(classList.get(position).getCredits()+"");
 				
@@ -839,21 +840,23 @@ public class TranscriptActivity extends Activity {
 	}
 	
 	public void creditsPlusClicked(View v) {
-		LinearLayout ll = (LinearLayout) v.getParent();
+		RelativeLayout ll = (RelativeLayout) v.getParent();
 		EditText et = (EditText) ll.findViewById(R.id.edit_credits);
 		String credits = et.getText().toString();
 		float cf = Float.parseFloat(credits);
 		cf += 0.25;
-		et.setText(cf + "");
+		DecimalFormat df = new DecimalFormat("0.00");
+		et.setText(df.format(cf));
 	}
 	
 	public void creditsMinusClicked(View v) {
-		LinearLayout ll = (LinearLayout) v.getParent();
+		RelativeLayout ll = (RelativeLayout) v.getParent();
 		EditText et = (EditText) ll.findViewById(R.id.edit_credits);
 		String credits = et.getText().toString();
 		float cf = Float.parseFloat(credits);
 		cf -= 0.25;
-		et.setText(cf + "");
+		DecimalFormat df = new DecimalFormat("0.00");
+		et.setText(df.format(cf));
 	}
 	
 	public class GalleryAdapter extends BaseAdapter {
@@ -954,6 +957,21 @@ public class TranscriptActivity extends Activity {
 			return "F";
 		else return "A";
 		
+	}
+	
+	public int getHashColor(String str) {
+		String hashStr = str.hashCode()+"";
+		
+		hashStr += hashStr + hashStr + hashStr + hashStr + hashStr;
+		
+		String red = hashStr.substring(1, 3);
+		String green = hashStr.substring(2, 4);
+		String blue = hashStr.substring(4, 6);
+		
+		String blueStr = "ff"+red+green+blue;
+		long n = Long.parseLong(blueStr, 16);
+		int nn = (int) n;
+		return nn;
 	}
 	
 }

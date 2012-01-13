@@ -7,7 +7,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.DecimalFormat;
-import java.util.Calendar;
 import java.util.Iterator;
 
 import misc.Constants;
@@ -16,11 +15,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class SettingsActivity extends Activity {
 	
@@ -66,6 +68,9 @@ public class SettingsActivity extends Activity {
 		edit_dm = (EditText) findViewById(R.id.edit_settings_dm);
 		edit_f = (EditText) findViewById(R.id.edit_settings_f);
 		
+		String season = getStrFromIntSeason(Integer.parseInt(period.split(" ")[1]));
+		((TextView) findViewById(R.id.text_settings_period)).setText(season+" "+period.split(" ")[0]);
+		
 	} // end onCreate
 	
 	public void onPause() {
@@ -78,6 +83,138 @@ public class SettingsActivity extends Activity {
 	public void onResume() {
 		super.onResume();
 		storageInit();
+	}
+	
+	public void logoClicked(View v) {
+		SettingsActivity.this.finish();
+	}
+	
+	public void editTermClicked(View v) {
+		s = Integer.parseInt(period.split(" ")[1]);
+		year = Integer.parseInt(period.split(" ")[0]);
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage("Change Term")
+		       .setCancelable(true)
+		       .setPositiveButton("Done", new DialogInterface.OnClickListener() {
+		           public void onClick(DialogInterface dialog, int id) {
+		        	   //Log.d("GPA", "setting season "+s);
+		        	   ((TextView) findViewById(R.id.text_settings_period)).setText( getStrFromIntSeason(s)+" "+year );
+		        	   period = year + " " + s;
+		        	   
+		        	   // TODO: set new period
+		        	   Iterator it = jMainT.keys();
+		        	   while(it.hasNext()) {
+		        		   if(it.next().equals("period")) {
+		        			   it.remove();
+		        			   break;
+		        		   }   
+		        	   }
+
+		        	   try {
+		        		   jMainT.accumulate("period", period);
+		        	   } catch (JSONException e) {
+		        		   // TODO Auto-generated catch block
+		        		   e.printStackTrace();
+		        	   }
+
+		        	   FileOutputStream fos = null;
+		        	   try {
+		        		   fos = openFileOutput(Constants.File_MainSettings, Context.MODE_PRIVATE);
+		        	   } catch (FileNotFoundException e) {
+		        		   Log.d(getString(R.string.app_name), "Could not create outputstream "+Constants.File_MainSettings);
+		        	   }
+		        	   try {
+		        		   fos.write(jMainT.toString().getBytes());
+		        	   } catch (IOException e) {
+		        		   Log.d(getString(R.string.app_name), "Could not write to fos: "+e.getMessage());
+		        	   }
+
+		           }
+		       })
+		       .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+		           public void onClick(DialogInterface dialog, int id) {
+		                dialog.cancel();
+		           }
+		       });
+		
+		View popupView = getLayoutInflater().inflate(R.layout.settings_popup, null);
+		builder.setView(popupView);
+		AlertDialog alert = builder.create();
+		alert.show();
+	}
+	
+	int seasons[] = {Constants.Spring, Constants.Summer, Constants.SchoolYear, Constants.Fall, Constants.Winter};
+	
+	int year=-1;
+	int s=-9;
+	
+	public void upSeasonClicked(View v) {
+		View vP = (View) v.getParent();
+		TextView tv = (TextView)vP.findViewById(R.id.text_settings_pop_season);
+		if(s==-9) {
+			s = Integer.parseInt(period.split(" ")[1]);
+		}
+		
+		s = (s+1)%5;
+		tv.setText(getStrFromIntSeason(s));
+	}
+	public void downSeasonClicked(View v) {
+		View vP = (View) v.getParent();
+		TextView tv = (TextView)vP.findViewById(R.id.text_settings_pop_season);
+		if(s==-9) {
+			s = Integer.parseInt(period.split(" ")[1]);
+		}
+		
+		if(s==0) {
+			s=4;
+		}
+		else {
+			s--;
+		}
+		
+		tv.setText(getStrFromIntSeason(s));
+	}
+	public void upYearClicked(View v) {
+		View vP = (View) v.getParent();
+		TextView tv = (TextView)vP.findViewById(R.id.text_settings_pop_year);
+		
+		if(year==-1) {
+			year = Integer.parseInt(period.split(" ")[0]);
+		}	
+		tv.setText(++year +"");
+	}
+	public void downYearClicked(View v) {
+		View vP = (View) v.getParent();
+		TextView tv = (TextView)vP.findViewById(R.id.text_settings_pop_year);
+		
+		if(year==-1) {
+			year = Integer.parseInt(period.split(" ")[0]);
+		}
+		
+		tv.setText(--year +"");
+	}
+	
+	public String getStrFromIntSeason(int n) {
+	
+		if(n==Constants.Spring) {
+			return "Spring";
+		}
+		else if(n==Constants.Summer) {
+			return "Summer";
+		}
+		else if(n==Constants.SchoolYear) {
+			return "School Year";
+		}
+		else if(n==Constants.Fall) {
+			return "Fall";
+		}
+		else if(n==Constants.Winter) {
+			return "Winter";
+		}
+		else {
+			return n+"";
+		}
 	}
 	
 	public void saveData() {
@@ -109,7 +246,6 @@ public class SettingsActivity extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		
 		FileOutputStream fos = null;
 		try {

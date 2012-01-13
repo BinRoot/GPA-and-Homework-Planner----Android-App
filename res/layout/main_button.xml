@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <Button
+        android:id="@+id/button_main_gv"
+        android:layout_width="140dip"
+        android:layout_height="140dip"
+        android:background="@drawable/hwbutton"
+        android:paddingTop="80dip"
+        android:shadowColor="#4C0016"
+        android:shadowDx="-5"
+        android:shadowDy="+5"
+        android:shadowRadius="10"
+        android:text="Homework"
+        android:textColor="#FFF7EB"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_margin="20dip" />
+
+</RelativeLayout>

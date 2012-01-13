@@ -18,6 +18,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 
@@ -110,6 +112,23 @@ public class HomeworkActivity extends Activity {
 		}
 	}
 	
+	public void optionClicked(View v) {
+		int classSize = ga.getCount();
+		final int randomItem = (int)(Math.random()*classSize);
+		
+		Toast.makeText(HomeworkActivity.this, "Randomly choosing class", Toast.LENGTH_SHORT).show();
+		
+		Handler mHandler = new Handler();
+		mHandler.postDelayed(new Runnable() {
+			public void run() {
+				String title = ga.getItem(randomItem);
+				Intent i = new Intent(HomeworkActivity.this, TodoActivity.class);
+				i.putExtra("title", title);
+				i.putExtra("period", period);
+				startActivity(i);
+			}
+		}, 500);
+	}
 	
 	public class GridAdapter extends BaseAdapter implements OnItemClickListener{
 

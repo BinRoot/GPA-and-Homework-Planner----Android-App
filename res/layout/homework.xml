@@ -16,16 +16,18 @@
 			android:layout_toLeftOf="@+id/button_hw_option"
 			android:layout_alignParentLeft="true"
 			android:onClick="logoClicked"
-			android:text="&lt; LOGO" />
+			android:background="@drawable/logobarback" />
 		<Button
 			android:id="@+id/button_hw_option"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
+			android:layout_marginLeft="3dip"
+			android:layout_marginRight="3dip"
+			android:layout_width="50dip"
+			android:layout_height="50dip"
 			android:layout_centerVertical="true"
 			android:layout_alignParentRight="true"
-			android:background="@android:drawable/ic_menu_search"
-			android:textAppearance="@android:style/TextAppearance.Large"
-			android:text=" ! " />
+			android:onClick="optionClicked"
+			android:background="@drawable/yellowquestion"
+			android:textAppearance="@android:style/TextAppearance.Large"/>
 	</RelativeLayout>
 
 	<RelativeLayout

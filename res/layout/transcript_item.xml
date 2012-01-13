@@ -10,7 +10,7 @@
     	android:layout_height="80dip"
     	android:layout_weight="1"
     	android:paddingRight="5dip"
-    	android:background="@drawable/graph_paper">
+    	android:background="@drawable/graph_paper_row">
     	<TextView 
 	    	android:id="@+id/text_transcript_classTitle"
 	    	android:layout_width="fill_parent"
@@ -52,7 +52,7 @@
     	android:layout_height="80dip"
     	android:clickable="true"
     	android:onClick="gradesClicked"
-    	android:background="@drawable/emboss"
+    	android:background="@drawable/gradebutton"
 		android:layout_weight="2">
 		
 		<TextView 

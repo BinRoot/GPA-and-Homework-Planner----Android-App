@@ -24,6 +24,7 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -34,6 +35,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -47,8 +49,14 @@ public class GPAActivity extends Activity {
 	Button homeworkBtn;
 	Button settingsBtn;
 	ListView lv;
+	GridView gv;
+	MainGridAdapter ga;
 	TodoMainAdapter ta;
+	boolean portrainMode = true;
+	
 	String period = null;
+	
+	boolean newuser = false;
 
 	public class MainButtonListener implements OnClickListener {
 
@@ -58,8 +66,6 @@ public class GPAActivity extends Activity {
 			this.mode = mode;
 		}
 
-		
-		
 		public void onClick(View v) {
 			if(mode==Constants.ButtonHomework) {
 				Intent i = new Intent(GPAActivity.this, HomeworkActivity.class);
@@ -88,28 +94,125 @@ public class GPAActivity extends Activity {
 		}
 	}
 
+	
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		transcriptBtn = (Button) findViewById(R.id.button_main_transcript);
-		transcriptBtn.setOnClickListener(new MainButtonListener(Constants.ButtonTranscript));
-
-		homeworkBtn = (Button) findViewById(R.id.button_main_homework);
-		homeworkBtn.setOnClickListener(new MainButtonListener(Constants.ButtonHomework));
 		
-		settingsBtn = (Button) findViewById(R.id.button_main_settings);
-		settingsBtn.setOnClickListener(new MainButtonListener(Constants.ButtonSettings));
 
-		storageInit();
+		gv = (GridView) findViewById(R.id.grid_main);
+		
+		//gv.setNumColumns(2);
+		
+		ga = new MainGridAdapter();
+		gv.setAdapter(ga);
 
-		//storageInit2();
+		
+		ga.addItem("Homework");
+		ga.addItem("Grades");
+		ga.addItem("Settings");
+		
+		ga.notifyDataSetChanged();
+	}
+	
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+	    super.onConfigurationChanged(newConfig);
+
+	    Log.d("GPA", "checking orientation");
+	    // Checks the orientation of the screen
+	    if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+	    	portrainMode = false;
+	    	gv.setNumColumns(3);
+	    } 
+	    else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+	    	portrainMode = true;
+	    	gv.setNumColumns(2);
+	    }
+	}
+	
+	//TODO: set up adapter
+	public class MainGridAdapter extends BaseAdapter {
+		
+		ArrayList<String> items;
+		
+		public MainGridAdapter() {
+			items = new ArrayList<String>();
+		}
+		
+		public void addItem(String str) {
+			if(!items.contains(str))
+				items.add(str);
+		}
+		
+		public int getCount() {
+			// TODO Auto-generated method stub
+			return items.size();
+		}
+
+		public Object getItem(int position) {
+			// TODO Auto-generated method stub
+			return items.get(position);
+		}
+
+		public long getItemId(int position) {
+			// TODO Auto-generated method stub
+			return position;
+		}
+
+		public View getView(int position, View convertView, ViewGroup parent) {
+			
+			View v = convertView;
+			if(v==null) {
+				v = getLayoutInflater().inflate(R.layout.main_button, null);
+			}
+			
+			Button b = (Button) v.findViewById(R.id.button_main_gv);
+			
+			if(position==0) {
+				b.setBackgroundDrawable(getResources().getDrawable(R.drawable.hwbutton));
+				b.setText("Homework");
+				b.setOnClickListener(new MainButtonListener(Constants.ButtonHomework));
+			}
+			else if(position==1) {
+				b.setBackgroundDrawable(getResources().getDrawable(R.drawable.folderbutton));
+				b.setText("Grades");
+				b.setOnClickListener(new MainButtonListener(Constants.ButtonTranscript));
+			}
+			else if(position==2) {
+				b.setBackgroundDrawable(getResources().getDrawable(R.drawable.settingsbutton));
+				b.setText("Settings");
+				b.setOnClickListener(new MainButtonListener(Constants.ButtonSettings));
+			}
+			else if(position==3 && portrainMode) {
+				if(getItem(position).equals("Step1")) {
+					b.setBackgroundDrawable(getResources().getDrawable(R.drawable.step1));
+				}
+				else if(getItem(position).equals("Step2")) {
+					b.setBackgroundDrawable(getResources().getDrawable(R.drawable.step2));
+				}
+				b.setText("");
+				b.setOnClickListener(null);
+			}
+			else if(position==3 && !portrainMode) {
+				
+				b.setBackgroundDrawable(null);
+				
+				b.setText("");
+				b.setOnClickListener(null);
+			}
+			
+			return v;
+		}
+		
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
+		storageInit();
 		storageInit2();
 	}
 
@@ -168,7 +271,6 @@ public class GPAActivity extends Activity {
 			}
 
 		}
-
 		else {
 			StringBuilder total = null;
 			try {
@@ -216,8 +318,10 @@ public class GPAActivity extends Activity {
 
 		if(fis == null) { // File doesn't exist. Must be a new user.
 			// TODO: Error message
+			
 		}
 		else {
+			
 			StringBuilder total = null;
 			try {
 				BufferedReader r = new BufferedReader(new InputStreamReader(fis));
@@ -254,6 +358,15 @@ public class GPAActivity extends Activity {
 				e.printStackTrace();
 			}
 
+			if(classes.size()==0) {
+				ga.addItem("Step1");
+				ga.notifyDataSetChanged();
+			}
+			else {
+				ga.items.remove("Step1");
+				ga.addItem("Step2");
+				ga.notifyDataSetChanged();
+			}
 
 			for(int i=0; i<classes.size(); i++) {
 
@@ -495,7 +608,7 @@ public class GPAActivity extends Activity {
 					}
 					
 					if(i==13 && thingsAdded<2 && restartDays==false) {
-						i=0;
+						i=-1;
 						restartDays = true;
 					}
 					
@@ -529,6 +642,12 @@ public class GPAActivity extends Activity {
 
 
 		ta = new TodoMainAdapter(todoMegaList);
+		
+		if(ta.getCount()!=0) {
+			ga.items.remove("Step2");
+			ga.notifyDataSetChanged();
+		}
+		
 		lv.setAdapter(ta);
 
 		
@@ -624,20 +743,19 @@ public class GPAActivity extends Activity {
 		lv.setOnItemClickListener(new OnItemClickListener() {
 
 			public void onItemClick(AdapterView<?> arg0, View arg1, final int arg2, long arg3) {
-				SlidingDrawer sd = (SlidingDrawer)findViewById(R.id.slidingDrawer);
-				sd.animateClose();
+				//SlidingDrawer sd = (SlidingDrawer)findViewById(R.id.slidingDrawer);
+				//sd.animateClose();
+				//Handler mHandler = new Handler();
+				//mHandler.postDelayed(new Runnable() {
 
-				Handler mHandler = new Handler();
-				mHandler.postDelayed(new Runnable() {
-
-					public void run() {
+					//public void run() {
 						String classTitle = ta.todoList.get(arg2).getClassTitle();
 						Intent i = new Intent(GPAActivity.this, TodoActivity.class);
 						i.putExtra("title", classTitle);
 						i.putExtra("period", period);
 						startActivity(i);
-					}
-				}, 200);
+					//}
+				//}, 200);
 			}
 		});
 		ta.notifyDataSetChanged();
@@ -693,6 +811,7 @@ public class GPAActivity extends Activity {
 		public void notifyDataSetChanged() {
 			super.notifyDataSetChanged();
 
+			
 			Log.d("cal", "UPDATING!");
 			((TextView)findViewById(R.id.text_main_due_drawer)).setText(getCount()+"");
 			

@@ -14,97 +14,18 @@
 			android:layout_height="fill_parent"
 			android:layout_centerInParent="true"
 			android:textAppearance="@android:style/TextAppearance.Large"
-			android:text="LOGO" />
+			android:background="@drawable/logobar_beta"/>
 	</RelativeLayout>
+	
+	<GridView 
+	    android:id="@+id/grid_main"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:layout_below="@id/relative_main_top"
+	    android:layout_marginBottom="60dip"
+	    android:numColumns="2">
+	</GridView>
 
-	<ScrollView
-		android:id="@+id/scroll_main_mid"
-		android:layout_below="@id/relative_main_top"
-		android:layout_width="fill_parent"
-		android:layout_height="fill_parent"
-		android:paddingBottom="60dip">
-
-	    <LinearLayout 
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:orientation="vertical">
-
-			<LinearLayout
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:orientation="horizontal">
-				<Button
-					android:id="@+id/button_main_homework"
-					android:layout_width="fill_parent"
-					android:layout_height="180dip"
-					android:paddingTop="140dip"
-					android:text="Homework"
-					android:textSize="24sp"
-					android:shadowColor="#4C0016"
-					android:shadowDx="-5"
-					android:shadowDy="+5"
-					android:shadowRadius="10"
-					android:textColor="#FFF7EB"
-					android:textStyle="bold"
-					android:background="@drawable/hwbutton"
-					android:layout_weight="1" />
-				<Button
-					android:id="@+id/button_main_transcript"
-					android:layout_width="fill_parent"
-					android:layout_height="180dip"
-					android:paddingTop="140dip"
-					android:textSize="24sp"
-					android:shadowColor="#4C0016"
-					android:shadowDx="+5"
-					android:shadowDy="+5"
-					android:shadowRadius="10"
-					android:textColor="#FFF7EB"
-					android:textStyle="bold"
-					android:text="Grades"
-					android:background="@drawable/folderbutton"
-					android:layout_weight="1" />
-			</LinearLayout>
-			
-			<LinearLayout
-				android:layout_width="fill_parent"
-				android:layout_height="250dip"
-				android:orientation="horizontal">
-				<Button
-					android:id="@+id/button_main_settings"
-					android:layout_width="fill_parent"
-					android:layout_height="180dip"
-					android:paddingTop="120dip"
-					android:text="Settings"
-					android:textSize="24sp"
-					android:shadowColor="#4C0016"
-					android:shadowDx="-5"
-					android:shadowDy="+5"
-					android:shadowRadius="10"
-					android:textColor="#FFF7EB"
-					android:textStyle="bold"
-					android:background="@drawable/settings2"
-					android:layout_weight="1" />
-				
-				<Button
-					android:id="@+id/button_main_free"
-					android:visibility="invisible"
-					android:layout_width="fill_parent"
-					android:layout_height="200dip"
-					android:paddingTop="160dip"
-					android:textSize="24sp"
-					android:shadowColor="#4C0016"
-					android:shadowDx="+5"
-					android:shadowDy="+5"
-					android:shadowRadius="10"
-					android:textColor="#FFF7EB"
-					android:textStyle="bold"
-					android:text="Free"
-					android:background="@drawable/folder_full"
-					android:layout_weight="1" />
-			</LinearLayout>
-		</LinearLayout>
-		
-	</ScrollView>
 	
 	<SlidingDrawer
 		android:id="@+id/slidingDrawer"

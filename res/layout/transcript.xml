@@ -16,7 +16,7 @@
 			android:layout_centerVertical="true"
 			android:layout_toLeftOf="@+id/button_main_up"
 			android:textAppearance="@android:style/TextAppearance.Large"
-			android:text="&lt; LOGO"
+			android:background="@drawable/logobarback"
 			android:onClick="backButtonClicked"/>
 			
 		<Button 

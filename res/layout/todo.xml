@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
+    android:id="@+id/root_relative"
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
@@ -16,17 +17,25 @@
 			android:layout_toLeftOf="@+id/button_todo_add"
 			android:layout_alignParentLeft="true"
 			android:onClick="logoClicked"
-			android:text="&lt; LOGO" />
+			android:background="@drawable/logobarback"/>
 		<Button
 			android:id="@+id/button_todo_add"
 			android:layout_width="50dip"
 			android:layout_height="50dip"
+			android:layout_marginLeft="5dip"
 			android:layout_centerVertical="true"
 			android:layout_alignParentRight="true"
 			android:background="@drawable/bullet_add"
 			android:textAppearance="@android:style/TextAppearance.Large"
 			android:onClick="addClicked"/>
 	</RelativeLayout>
+	
+	<ImageView 
+	    android:id="@+id/image_clickyhere"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:background="@drawable/clickyhere"
+	    android:layout_centerInParent="true"/>
 
 	<RelativeLayout 
 		android:id="@+id/relative_todo_title"
@@ -56,7 +65,6 @@
 			android:layout_below="@+id/text_todo_title"
 			android:text="Homework"
 			android:layout_centerHorizontal="true"/>
-		
 	</RelativeLayout>
 
 	<ListView 
@@ -64,7 +72,9 @@
 		android:layout_below="@id/relative_todo_title"
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
-		 android:cacheColorHint="#00000000">
+		android:dividerHeight="0px"
+		android:divider="#00000000"
+		android:cacheColorHint="#00000000">
 	</ListView>
 
 </RelativeLayout>

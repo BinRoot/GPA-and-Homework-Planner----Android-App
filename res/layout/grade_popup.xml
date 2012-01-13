@@ -63,30 +63,30 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_marginTop="40dip">
+
 				<TextView
 					android:id="@+id/text_grades_credits"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_alignParentLeft="true"
-					android:layout_centerVertical="true"
 					style="@style/todo_popup"
 					android:text="Credits:" />
 					
-				<LinearLayout
+				<RelativeLayout
 					android:id="@+id/numberPicker_credits"
-					android:layout_alignParentRight="true"
-					android:layout_marginRight="30dip"
-					android:layout_width="wrap_content"
+					android:layout_width="fill_parent"
 					android:layout_height="wrap_content"
-					android:layout_centerVertical="true"
-					android:orientation="vertical">
+					android:orientation="horizontal"
+					android:layout_centerHorizontal="true"
+					android:layout_below="@id/text_grades_credits">
 					<Button 
 						android:id="@+id/button_credits_plus"
-						android:layout_width="70dip"
-						android:layout_height="70dip"
+						android:layout_width="50dip"
+						android:layout_height="50dip"
 						android:layout_gravity="center"
 						android:background="@drawable/bullet_add"
-						android:onClick="creditsPlusClicked"/>
+						android:onClick="creditsPlusClicked"
+						android:layout_toRightOf="@+id/edit_credits"/>
 						
 					<EditText 
 						android:id="@+id/edit_credits"
@@ -95,17 +95,21 @@
 						android:gravity="center"
 						android:editable="false"
 						android:focusable="false"
-						android:text="3.0"/>
+						android:textSize="20dip"
+						android:inputType="numberDecimal"
+						android:text="3.0"
+						android:layout_centerHorizontal="true"/>
 						
 					<Button 
 						android:id="@+id/button_credits_minus"
-						android:layout_width="70dip"
-						android:layout_height="70dip"
+						android:layout_width="50dip"
+						android:layout_height="50dip"
 						android:layout_gravity="center"
 						android:background="@drawable/bullet_delete"
-						android:onClick="creditsMinusClicked"/>
+						android:onClick="creditsMinusClicked"
+						android:layout_toLeftOf="@id/edit_credits"/>
 					
-				</LinearLayout>
+				</RelativeLayout>
 			</RelativeLayout>
 
 		</LinearLayout>
@@ -118,6 +122,13 @@
 		android:layout_height="wrap_content"
 		android:layout_alignParentBottom="true"
 		android:onClick="doneGradesClicked"
+		android:textSize="24dip"
+		android:background="@drawable/greenbutton"
+		android:textColor="#FFFFFF"
+		android:shadowColor="#000000"
+		android:shadowDx="1"
+		android:shadowDy="1"
+		android:shadowRadius="5"
 		android:text="DONE" />
 	
 

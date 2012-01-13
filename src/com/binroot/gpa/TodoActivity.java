@@ -95,8 +95,13 @@ public class TodoActivity extends Activity {
 		super.onResume();
 		
 		storageInit();
-
 	}
+	
+	public void onPause() {
+		super.onPause();
+	}
+	
+	
 
 	public void storageInit() {
 		String filename = Constants.File_Todo+"_"+period+"_"+title;
@@ -270,6 +275,12 @@ public class TodoActivity extends Activity {
 				}
 			});
 			
+			if(getCount()==0) {
+				((ImageView)findViewById(R.id.image_clickyhere)).setVisibility(View.VISIBLE);
+			}
+			else {
+				((ImageView)findViewById(R.id.image_clickyhere)).setVisibility(View.GONE);
+			}
 		}
 		
 		public void addItem(TodoItem ti) {
@@ -314,8 +325,8 @@ public class TodoActivity extends Activity {
 				db.setVisibility(View.VISIBLE);
 			}
 			else {
-				((RelativeLayout)v.findViewById(R.id.relative_todo_item))
-					.setBackgroundColor(getHashColor(getItem(position).getClassTitle()));
+				((RelativeLayout)v.findViewById(R.id.relative_todo_item)).setBackgroundResource(R.drawable.graph_paper_row);
+				((RelativeLayout)v.findViewById(R.id.relative_todo_priority)).setBackgroundColor(getHashColor(getItem(position).getClassTitle()));
 				cb.setVisibility(View.VISIBLE);
 				cb.setBackgroundResource(R.drawable.bullet_accept_off);
 				db.setVisibility(View.GONE);

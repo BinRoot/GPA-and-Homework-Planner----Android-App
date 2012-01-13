@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:padding="20dip">
+	
+    <LinearLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1">
+            <RelativeLayout 
+	            android:layout_width="fill_parent"
+	            android:layout_height="140dip">
+	            <Button 
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_above="@+id/text_settings_pop_season"
+	                android:layout_centerHorizontal="true"
+	                android:onClick="upSeasonClicked"
+	                android:background="@drawable/up"/>
+	            <TextView 
+	                android:id="@+id/text_settings_pop_season"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:textSize="20dip"
+	                android:textColor="#FFFFFF"
+	                android:layout_centerInParent="true"
+	                android:text="Spring"/>
+	            <Button 
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_below="@id/text_settings_pop_season"
+	                android:layout_centerHorizontal="true"
+	                android:onClick="downSeasonClicked"
+	                android:background="@drawable/down"/>
+	        </RelativeLayout>
+        </RelativeLayout>
+        
+        <RelativeLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1">
+            <RelativeLayout 
+	            android:layout_width="fill_parent"
+	            android:layout_height="140dip">
+	            <Button 
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_above="@+id/text_settings_pop_year"
+	                android:layout_centerHorizontal="true"
+	                android:onClick="upYearClicked"
+	                android:background="@drawable/up"/>
+	            <TextView 
+	                android:id="@+id/text_settings_pop_year"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:textSize="20dip"
+	                android:textColor="#FFFFFF"
+	                android:layout_centerInParent="true"
+	                android:text="2012"/>
+	            <Button 
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_below="@id/text_settings_pop_year"
+	                android:layout_centerHorizontal="true"
+	                android:onClick="downYearClicked"
+	                android:background="@drawable/down"/>
+	        </RelativeLayout>
+        </RelativeLayout>
+
+    </LinearLayout>
+</RelativeLayout>
